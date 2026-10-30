@@ -1,374 +1,236 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portafolio Técnico | Ingeniero de Software & QA Automation</title>
-  <meta name="description" content="Portafolio profesional enfocado en arquitectura de pruebas, automatización y desarrollo de software." />
+  <title>Marttin Roman | Senior QA Automation Engineer & SDET</title>
+  <meta name="description" content="Especialista en QA Automation, arquitectura de frameworks de pruebas y validación de sistemas con IA." />
 
-  <style>
-    :root {
-      --bg: #090d16;
-      --card-bg: #111827;
-      --card-border: #1f2937;
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
-      --accent: #38bdf8;
-      --accent-subtle: rgba(56, 189, 248, 0.1);
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text-main);
-      font-family: var(--font-sans);
-      line-height: 1.6;
-      padding: 2.5rem 1.25rem;
-    }
-
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    header {
-      margin-bottom: 3.5rem;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--accent-subtle);
-      color: var(--accent);
-      padding: 0.3rem 0.8rem;
-      border-radius: 9999px;
-      font-size: 0.85rem;
-      font-family: var(--font-mono);
-      margin-bottom: 1.25rem;
-      border: 1px solid rgba(56, 189, 248, 0.2);
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--accent);
-      border-radius: 50%;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      margin-bottom: 0.5rem;
-    }
-
-    .subtitle {
-      font-size: 1.2rem;
-      color: var(--accent);
-      font-family: var(--font-mono);
-      margin-bottom: 1rem;
-    }
-
-    .bio {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 680px;
-      margin-bottom: 1.5rem;
-    }
-
-    .links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--text-main);
-      background-color: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-family: var(--font-mono);
-      transition: border-color 0.2s, background-color 0.2s;
-    }
-
-    .btn:hover {
-      border-color: var(--accent);
-      background-color: #1a2234;
-    }
-
-    section {
-      margin-bottom: 3.5rem;
-    }
-
-    h2 {
-      font-size: 1.35rem;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 0.6rem;
-      margin-bottom: 1.5rem;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-mono);
-    }
-
-    /* Stack / Badges */
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-    }
-
-    .skill-tag {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      padding: 0.35rem 0.75rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-    }
-
-    /* Projects Grid */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.25rem;
-    }
-
-    @media (min-width: 640px) {
-      .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          }
+        }
       }
     }
+  </script>
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: #374151;
-    }
-
-    .card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-main);
-    }
-
-    .card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 1.25rem;
-      flex-grow: 1;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      font-family: var(--font-mono);
-    }
-
-    .card-link {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .card-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Experience List */
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .timeline-item {
-      position: relative;
-      padding-left: 1.25rem;
-      border-left: 2px solid var(--card-border);
-    }
-
-    .timeline-item::before {
-      content: "";
-      position: absolute;
-      left: -5px;
-      top: 6px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .timeline-title {
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .timeline-meta {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      margin-bottom: 0.4rem;
-    }
-
-    .timeline-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    footer {
-      border-top: 1px solid var(--card-border);
-      padding-top: 2rem;
-      font-size: 0.85rem;
-      font-family: var(--font-mono);
-      color: var(--text-muted);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-  </style>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
-  <div class="container">
-    <!-- Header / Hero -->
-    <header>
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        <span>Disponible para nuevos proyectos</span>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Glow Background Effect -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-sky-500/10 blur-[130px] rounded-full"></div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 space-y-16">
+
+    <!-- Hero / Profile Section -->
+    <header class="flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-8 pb-10 border-b border-slate-800/80">
+      <div class="space-y-4 text-center md:text-left">
+        <!-- Availability Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Disponible para roles remotos e internacionales
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">
+          Marttin Roman
+        </h1>
+
+        <p class="text-lg md:text-xl font-mono text-sky-400">
+          Senior QA Automation Engineer &amp; SDET
+        </p>
+
+        <p class="text-slate-400 text-sm md:text-base leading-relaxed max-w-xl">
+          Ingeniero de Sistemas especializado en diseño de frameworks de automatización desde cero, validación de sistemas de IA / LLMs y aceleración de pipelines de integración continua.
+        </p>
+
+        <!-- Social / Contact Buttons -->
+        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
+          <a href="https://github.com/marttinroman" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-sm font-medium hover:border-sky-500 hover:text-white transition-all shadow-sm">
+            <i data-lucide="github" class="w-4 h-4"></i> GitHub
+          </a>
+          <a href="https://linkedin.com/in/marttinroman" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 text-sm font-medium hover:border-sky-500 hover:text-white transition-all shadow-sm">
+            <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
+          </a>
+          <a href="mailto:tu-correo@ejemplo.com"
+             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition-all shadow-sm">
+            <i data-lucide="mail" class="w-4 h-4"></i> Contactar
+          </a>
+        </div>
       </div>
-      <h1>Tu Nombre</h1>
-      <p class="subtitle">&gt; Senior QA Automation Engineer &amp; SDET</p>
-      <p class="bio">
-        Especializado en arquitectura de pruebas de software, validación de sistemas inteligentes y pipelines CI/CD. Transformando especificaciones en suites automatizadas robustas, escalables y mantenibles.
-      </p>
-      <div class="links">
-        <a href="https://github.com/tu-usuario" class="btn" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com/in/tu-usuario" class="btn" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:tu-correo@ejemplo.com" class="btn">Email</a>
+
+      <!-- Profile Avatar -->
+      <div class="relative group">
+        <div class="absolute -inset-0.5 bg-gradient-to-tr from-sky-500 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
+        <img 
+          src="https://github.com/marttinroman.png" 
+          alt="Marttin Roman" 
+          class="relative w-36 h-36 md:w-44 md:h-44 rounded-2xl object-cover border-2 border-slate-800 bg-slate-900 shadow-2xl"
+          onerror="this.src='https://ui-avatars.com/api/?name=Marttin+Roman&background=0f172a&color=38bdf8&size=256'"
+        />
       </div>
     </header>
 
-    <!-- Tech Stack -->
-    <section>
-      <h2>// Stack Tecnológico</h2>
-      <div class="skills-grid">
-        <span class="skill-tag">Playwright</span>
-        <span class="skill-tag">TypeScript</span>
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">Docker</span>
-        <span class="skill-tag">GitHub Actions</span>
-        <span class="skill-tag">CI/CD Pipelines</span>
-        <span class="skill-tag">k6 (Performance)</span>
-        <span class="skill-tag">API REST &amp; GraphQL</span>
-        <span class="skill-tag">AI Testing / RAG</span>
-        <span class="skill-tag">Git / Linux</span>
+    <!-- Core Services / Value Proposition -->
+    <section class="space-y-6">
+      <div class="flex items-center gap-2 text-sky-400 font-mono text-sm tracking-wider uppercase">
+        <i data-lucide="cpu" class="w-4 h-4"></i>
+        <span>Especialidades Técnicas</span>
       </div>
-    </section>
 
-    <!-- Projects -->
-    <section>
-      <h2>// Proyectos Destacados</h2>
-      <div class="projects-grid">
-        <div class="card">
-          <div>
-            <h3>E2E Framework Boilerplate</h3>
-            <p>Framework modular de pruebas end-to-end con Playwright y TypeScript, generación de reportes automáticos y paralelización en GitHub Actions.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center mb-3">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
           </div>
-          <div class="card-footer">
-            <span>TypeScript / Playwright</span>
-            <a href="https://github.com/tu-usuario/proyecto-1" class="card-link" target="_blank" rel="noopener">Ver repo &rarr;</a>
-          </div>
+          <h3 class="font-semibold text-white text-base mb-1">Frameworks de Automatización</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Arquitectura E2E y API robusta con Playwright y TypeScript. Reducción drástica de flaky tests y ejecución paralela.
+          </p>
         </div>
 
-        <div class="card">
-          <div>
-            <h3>AI Vector Validation Suite</h3>
-            <p>Herramienta para evaluar y benchmarkear respuestas en sistemas RAG y bases de datos vectoriales con métricas de similitud y alucinación.</p>
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3">
+            <i data-lucide="bot" class="w-5 h-5"></i>
           </div>
-          <div class="card-footer">
-            <span>Python / LLMs</span>
-            <a href="https://github.com/tu-usuario/proyecto-2" class="card-link" target="_blank" rel="noopener">Ver repo &rarr;</a>
-          </div>
+          <h3 class="font-semibold text-white text-base mb-1">Validación de IA &amp; RAG</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Evaluación sistemática de LLMs, bases de datos vectoriales, scoring semántico y control de alucinaciones.
+          </p>
         </div>
 
-        <div class="card">
-          <div>
-            <h3>API Performance Harness</h3>
-            <p>Suite de pruebas de carga y estrés distribuido con k6, configurado como control de calidad previo al pase a producción.</p>
+        <div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
+            <i data-lucide="git-branch" class="w-5 h-5"></i>
           </div>
-          <div class="card-footer">
-            <span>k6 / Docker</span>
-            <a href="https://github.com/tu-usuario/proyecto-3" class="card-link" target="_blank" rel="noopener">Ver repo &rarr;</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div>
-            <h3>Visual Regression Engine</h3>
-            <p>Pipeline de pruebas de regresión visual píxel a píxel con soporte multi-viewport y comparación de snapshots dinámicos.</p>
-          </div>
-          <div class="card-footer">
-            <span>Automation / CI</span>
-            <a href="https://github.com/tu-usuario/proyecto-4" class="card-link" target="_blank" rel="noopener">Ver repo &rarr;</a>
-          </div>
+          <h3 class="font-semibold text-white text-base mb-1">CI/CD &amp; Test Ops</h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Integración de suites en GitHub Actions y Azure DevOps con compuertas de calidad (Quality Gates) automatizadas.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- Experience -->
-    <section>
-      <h2>// Trayectoria</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-title">Senior QA Automation Lead</div>
-          <div class="timeline-meta">Empresa / Cliente • 2023 — Presente</div>
-          <div class="timeline-desc">
-            Diseño e implementación de estrategias de testing integral en entornos ágiles, reduciendo tiempos de despliegue y elevando la cobertura de pruebas críticas por encima del 90%.
-          </div>
+    <!-- Featured Projects Showcase (With Images) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2 text-sky-400 font-mono text-sm tracking-wider uppercase">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>Proyectos Destacados</span>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-title">Software Development Engineer in Test (SDET)</div>
-          <div class="timeline-meta">Empresa / Consultora • 2020 — 2023</div>
-          <div class="timeline-desc">
-            Desarrollo de herramientas internas para mocking de microservicios, suites de testing de integración continua y optimización de ejecución de tests en paralelo.
+        <span class="text-xs font-mono text-slate-500">Producción &amp; Open Source</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Card 1 -->
+        <article class="group rounded-xl bg-slate-900/50 border border-slate-800/90 overflow-hidden hover:border-slate-700 transition flex flex-col">
+          <div class="h-44 bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-800">
+            <!-- Reemplazar con <img src="assets/images/project1.png" class="w-full h-full object-cover"> cuando tengas la imagen -->
+            <div class="flex flex-col items-center gap-2 text-slate-500">
+              <i data-lucide="terminal" class="w-8 h-8 text-sky-400"></i>
+              <span class="font-mono text-xs">Playwright / TypeScript E2E Engine</span>
+            </div>
           </div>
-        </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h4 class="font-semibold text-white text-base group-hover:text-sky-400 transition">
+                Full-Stack Automation Boilerplate
+              </h4>
+              <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                Framework escalable con Page Object Model, soporte de multi-browser en paralelo y reportes Allure automáticos en CI/CD.
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-4 mt-4 border-t border-slate-800 text-xs font-mono text-slate-400">
+              <span>TypeScript • CI/CD</span>
+              <a href="https://github.com/marttinroman" target="_blank" class="inline-flex items-center gap-1 text-sky-400 hover:underline">
+                Repositorio <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="group rounded-xl bg-slate-900/50 border border-slate-800/90 overflow-hidden hover:border-slate-700 transition flex flex-col">
+          <div class="h-44 bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-800">
+            <div class="flex flex-col items-center gap-2 text-slate-500">
+              <i data-lucide="sparkles" class="w-8 h-8 text-purple-400"></i>
+              <span class="font-mono text-xs">AI Evaluation &amp; Benchmarks</span>
+            </div>
+          </div>
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h4 class="font-semibold text-white text-base group-hover:text-purple-400 transition">
+                RAG Quality &amp; Vector Harness
+              </h4>
+              <p class="text-slate-400 text-xs mt-2 leading-relaxed">
+                Herramienta para verificación de precisión sintáctica y semántica de respuestas emitidas por pipelines de modelos de lenguaje.
+              </p>
+            </div>
+            <div class="flex items-center justify-between pt-4 mt-4 border-t border-slate-800 text-xs font-mono text-slate-400">
+              <span>Python • LLMs</span>
+              <a href="https://github.com/marttinroman" target="_blank" class="inline-flex items-center gap-1 text-sky-400 hover:underline">
+                Repositorio <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Technical Stack Badges -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 text-sky-400 font-mono text-sm tracking-wider uppercase">
+        <i data-lucide="code" class="w-4 h-4"></i>
+        <span>Herramientas &amp; Tecnologías</span>
+      </div>
+
+      <div class="flex flex-wrap gap-2 text-xs font-mono">
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">Playwright</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">TypeScript</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">Python</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">Docker</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">GitHub Actions</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">k6 (Performance)</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">REST &amp; GraphQL APIs</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">Azure DevOps</span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-900 border border-slate-800 text-slate-300">AI Agents &amp; RAG Evaluation</span>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-      <span>&copy; 2026 Tu Nombre</span>
-      <span>Desplegado en GitHub Pages</span>
+    <footer class="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-4">
+      <div>&copy; 2026 Marttin Roman • Publicado en GitHub Pages</div>
+      <div class="flex items-center gap-4">
+        <span>Guatire / Caracas</span>
+        <span>•</span>
+        <span>Remote Ready</span>
+      </div>
     </footer>
-  </div>
+
+  </main>
+
+  <!-- Lucide icons activator -->
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
