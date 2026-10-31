@@ -1,0 +1,308 @@
+openapi: 3.0.3
+info:
+  title: Marttin Roman Portfolio & AI-TestOps Engine Data Contracts
+  version: 1.0.0
+  description: >-
+    Data contract specification for the Marttin Roman Portfolio platform,
+    defining schemas for portfolio profile metadata, showcase projects,
+    i18n localization dictionaries, and GitHub Actions telemetry integrations.
+  contact:
+    name: Marttin Roman
+    url: https://github.com/marttinroman
+    email: marttinroman@gmail.com
+servers:
+  - url: https://marttinroman.github.io
+    description: Production GitHub Pages Edge CDN
+  - url: http://localhost:8080
+    description: Local Static Development Server
+
+paths:
+  /data/profile.json:
+    get:
+      summary: Retrieve developer profile and availability metadata
+      description: Returns core biographical data, availability status, and social profile links.
+      operationId: getProfileData
+      responses:
+        '200':
+          description: Developer profile successfully retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfileData'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /data/projects.json:
+    get:
+      summary: Retrieve project showcase catalog
+      description: Returns list of featured engineering projects, including the flagship Autonomous QA & AI-TestOps Engine.
+      operationId: getProjects
+      responses:
+        '200':
+          description: Projects list successfully retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - projects
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  projects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProjectItem'
+
+  /data/locales/{locale}.json:
+    get:
+      summary: Retrieve localization dictionary
+      description: Returns translation keys and text for the specified language code (en or es).
+      operationId: getLocaleDictionary
+      parameters:
+        - name: locale
+          in: path
+          required: true
+          description: Language code
+          schema:
+            type: string
+            enum: [en, es]
+            default: en
+      responses:
+        '200':
+          description: Localization dictionary returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocaleDictionary'
+        '404':
+          description: Locale not supported
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /api/contact:
+    post:
+      summary: Submit recruiter or client contact inquiry (Client Payload Contract)
+      description: Validates inbound recruiter or consulting contact inquiry payload.
+      operationId: submitContactInquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactInquiryRequest'
+      responses:
+        '200':
+          description: Contact inquiry validated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactInquiryResponse'
+        '400':
+          description: Invalid input parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    ProfileData:
+      type: object
+      required:
+        - name
+        - title
+        - availability
+        - github_url
+        - linkedin_url
+      properties:
+        name:
+          type: string
+          example: Marttin Roman
+        title:
+          type: object
+          properties:
+            en:
+              type: string
+              example: Senior QA Automation Engineer & SDET
+            es:
+              type: string
+              example: Senior QA Automation Engineer & SDET
+        bio:
+          type: object
+          properties:
+            en:
+              type: string
+              example: Systems Engineer specialized in zero-flake automation frameworks and AI/LLM evaluation.
+            es:
+              type: string
+              example: Ingeniero de Sistemas especializado en diseño de frameworks de automatización y validación de IA.
+        availability:
+          type: object
+          properties:
+            status:
+              type: string
+              example: active
+            label_en:
+              type: string
+              example: Available for remote & international roles
+            label_es:
+              type: string
+              example: Disponible para roles remotos e internacionales
+        avatar_url:
+          type: string
+          format: uri
+          example: https://github.com/marttinroman.png
+        github_url:
+          type: string
+          format: uri
+          example: https://github.com/marttinroman
+        linkedin_url:
+          type: string
+          format: uri
+          example: https://linkedin.com/in/marttinroman
+
+    ProjectItem:
+      type: object
+      required:
+        - id
+        - is_flagship
+        - title
+        - description
+        - tech_stack
+        - repo_url
+      properties:
+        id:
+          type: string
+          example: autonomous-qa-engine
+        is_flagship:
+          type: boolean
+          example: true
+        title:
+          type: object
+          properties:
+            en:
+              type: string
+              example: Autonomous QA & AI-TestOps Engine
+            es:
+              type: string
+              example: Autonomous QA & AI-TestOps Engine
+        description:
+          type: object
+          properties:
+            en:
+              type: string
+              example: Continuous quality gate for Web UI, APIs, and Generative AI (LLM/RAG) pipelines.
+            es:
+              type: string
+              example: Suite de control de calidad continuo para aplicaciones web, APIs y sistemas con IA.
+        validation_layers:
+          type: array
+          items:
+            type: string
+          example:
+            - UI & Critical Flows (Playwright/TypeScript)
+            - API Schema & Latency Validation
+            - AI Semantic Evaluation (RAG Harness)
+        tech_stack:
+          type: array
+          items:
+            type: string
+          example: [Playwright, TypeScript, Python, GitHub Actions, RAG Evaluation]
+        repo_url:
+          type: string
+          format: uri
+          example: https://github.com/marttinroman
+
+    LocaleDictionary:
+      type: object
+      properties:
+        nav_specialties:
+          type: string
+        nav_projects:
+          type: string
+        nav_contact:
+          type: string
+        hero_available:
+          type: string
+        hero_title:
+          type: string
+        hero_summary:
+          type: string
+
+    ContactInquiryRequest:
+      type: object
+      required:
+        - sender_name
+        - sender_email
+        - message
+      properties:
+        sender_name:
+          type: string
+          minLength: 2
+          maxLength: 100
+          example: Sarah Jenkins
+        sender_email:
+          type: string
+          format: email
+          example: sarah.jenkins@techscaleup.com
+        organization:
+          type: string
+          maxLength: 100
+          example: Global ScaleUp Inc.
+        inquiry_type:
+          type: string
+          enum: [recruitment, consulting, advisory, general]
+          default: recruitment
+        message:
+          type: string
+          minLength: 10
+          maxLength: 2000
+          example: We have an open Senior SDET role and loved your AI-TestOps showcase.
+
+    ContactInquiryResponse:
+      type: object
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Inquiry payload validated successfully.
+        mailto_fallback_url:
+          type: string
+          format: uri
+          example: mailto:marttinroman@gmail.com?subject=Inquiry
+
+    ErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              example: INVALID_LOCALE
+            message:
+              type: string
+              example: Requested locale is not supported.

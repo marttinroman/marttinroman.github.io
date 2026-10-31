@@ -1,0 +1,46 @@
+Construir mi página de portafolio en Github Pages usando como plantilla “index.html”
+
+fase inicial dejar unna pagina full funcional bella moderna conn capacidad de dark y light mode, en ingles y español, con ingles por defaul, puedes tomar informmacion del perfil de github “https://github.com/marttinroman”
+
+El proyecto debe considerar los siguientes aspectos técnicos, pero no es necesario planificarlos por ahora: solo la parte front que pueda vivir en GitHub Pages.
+
+el resto es infrmacionn tecnica que se pueden implementar en fases siguientes:
+
+### Autonomous QA & AI-TestOps Engine
+
+**Suite de control de calidad continuo para aplicaciones web, APIs y sistemas con Inteligencia Artificial (LLM / RAG).**
+
+#### 1. El Reto
+
+Las arquitecturas de software modernas combinan interfaces interactivas, microservicios y componentes de IA que no responden de forma determinista. Los problemas más comunes en producción son:
+
+- **Falta de gobierno en salidas de IA:** Dificultad para detectar alucinaciones, respuestas truncadas o cambios no deseados tras modificar un prompt o actualizar un modelo.
+- **Cuellos de botella en CI/CD:** Suites de pruebas E2E lentas, con alta tasa de falsos positivos (*flaky tests*) que bloquean despliegues.
+- **Costes altos de monitoreo:** Herramientas propietarias costosas para reportería que requieren bases de datos dedicadas.
+
+#### 2. La Solución
+
+Un motor unificado y autónomo que actúa como **Quality Gate** integral antes y después de cada despliegue, ejecutando tres capas de validación:
+
+- **UI & Flujos Críticos:** Automatización robusta con Playwright y TypeScript bajo el patrón Page Object Model, con ejecución paralela multi-navegador.
+- **Validación de APIs:** Chequeo estricto de esquemas JSON, latencia y aserciones de código de estado HTTP.
+- **Evaluación Semántica de IA (RAG Harness):** Módulo de pruebas que valida relevancia semántica, fidelidad de fuentes (*faithfulness*) y ausencia de alucinaciones en respuestas generadas por LLMs.
+
+#### 3. Cómo Funciona el Pipeline
+
+1. **Disparo automático:** Un workflow en GitHub Actions se activa tras cada `git push` o de forma programada todas las mañanas mediante un temporizador cron.
+2. **Ejecución aislada:** Las pruebas corren en paralelo en máquinas virtuales efímeras en la nube.
+3. **Consolidación de métricas:** Los resultados generan un reporte estático con gráficos de tasa de éxito, tiempos de respuesta y derivas de IA.
+4. **Despliegue directo:** El reporte se publica automáticamente en GitHub Pages, disponible en vivo para consulta del equipo.
+
+#### 4. Stack Tecnológico
+
+- **Core Automation:** Playwright, TypeScript, Python, pytest.
+- **Evaluación IA:** Modelos de embeddings, similitud semántica de coseno, validación de schemas JSON.
+- **CI/CD & Hosting:** GitHub Actions, Linux Runners, GitHub Pages.
+
+#### 5. Impacto y Valor Aportado
+
+- **Coste de infraestructura $0:** Aprovecha la capa gratuita de GitHub Actions y GitHub Pages, sin servidores ni bases de datos activas 24/7.
+- **Cobertura 360°:** Consolida pruebas de interfaz de usuario, backend y capas de IA en una única fuente de verdad.
+- **Visibilidad en tiempo real:** Reporte vivo y público que demuestra la estabilidad del producto a líderes técnicos, de producto y clientes.
