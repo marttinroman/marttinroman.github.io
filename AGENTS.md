@@ -268,9 +268,9 @@ tests/
 
 | Phase                  | Status         | Output Files                                                                       |
 | ---------------------- | -------------- | ---------------------------------------------------------------------------------- |
-| Fase 1: Constitution   | [Pending/Done] | `idea/*`                                                                           |
-| Fase 2: Architecture   | [Pending/Done] | `PRD/*`, `SRS/*`                                                                   |
-| Fase 3: Infrastructure | [Pending/Done] | `SRS/infrastructure.md`                                                            |
+| Fase 1: Constitution   | Done           | `idea/*`                                                                           |
+| Fase 2: Architecture   | Done           | `PRD/*`, `SRS/*`                                                                   |
+| Fase 3: Infrastructure | Done           | `SRS/infrastructure.md`                                                            |
 | Context Generators     | [Pending/Done] | `business-data-map`, `api-architecture`, `project-dev-guide`, `project-test-guide` |
 
 ---
