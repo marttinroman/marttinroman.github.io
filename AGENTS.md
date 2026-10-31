@@ -254,11 +254,12 @@ tests/
 
 > Update with your project's priorities.
 
-| Priority | Flow     | Business Impact  | Status |
-| -------- | -------- | ---------------- | ------ |
-| Critical | [Flow 1] | [Why it matters] | [ ]    |
-| Critical | [Flow 2] | [Why it matters] | [ ]    |
-| High     | [Flow 3] | [Why it matters] | [ ]    |
+| Priority | Flow                                             | Business Impact                                      | Status |
+| -------- | ------------------------------------------------ | ---------------------------------------------------- | ------ |
+| Critical | Bilingual i18n Switcher (EN default / ES toggle) | Global recruiter access & local market credibility   | [x]    |
+| Critical | Theme Switcher & Persistence (Dark / Light)      | High contrast WCAG AA reading comfort on all devices | [x]    |
+| High     | Outbound Verified Repositories (5 Repos)         | Tangible proof of code quality & architecture        | [x]    |
+| High     | Contact Actions (Mailto & Clipboard Toast)       | Zero-friction lead conversion for recruiters         | [x]    |
 
 ---
 
@@ -266,12 +267,12 @@ tests/
 
 > Track which discovery prompts have been completed.
 
-| Phase                  | Status         | Output Files                                                                       |
-| ---------------------- | -------------- | ---------------------------------------------------------------------------------- |
-| Fase 1: Constitution   | Done           | `idea/*`                                                                           |
-| Fase 2: Architecture   | Done           | `PRD/*`, `SRS/*`                                                                   |
-| Fase 3: Infrastructure | Done           | `SRS/infrastructure.md`                                                            |
-| Context Generators     | [Pending/Done] | `business-data-map`, `api-architecture`, `project-dev-guide`, `project-test-guide` |
+| Phase                  | Status | Output Files                                                                       |
+| ---------------------- | ------ | ---------------------------------------------------------------------------------- |
+| Fase 1: Constitution   | Done   | `idea/*`                                                                           |
+| Fase 2: Architecture   | Done   | `PRD/*`, `SRS/*`                                                                   |
+| Fase 3: Infrastructure | Done   | `SRS/infrastructure.md`                                                            |
+| Context Generators     | Done   | `business-data-map`, `api-architecture`, `project-dev-guide`, `project-test-guide` |
 
 ---
 

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Marttin Roman | Senior QA Automation Engineer &amp; SDET | AI-TestOps</title>
   <meta name="description" content="Senior QA Automation Engineer & SDET specializing in zero-flake test frameworks, AI/LLM evaluation, and automated CI/CD Quality Gates." />
-  <link rel="icon" href="https://github.com/marttinroman.png" type="image/png" />
+  <link rel="icon" href="docs/img/LinkedIn.jpeg" type="image/jpeg" />
 
   <!-- Early Theme Detection to Prevent FOUC (Flash of Unstyled Theme) -->
   <script>
@@ -147,7 +147,7 @@
       <div class="relative group">
         <div class="absolute -inset-0.5 bg-gradient-to-tr from-sky-500 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
         <img 
-          src="https://github.com/marttinroman.png" 
+          src="docs/img/LinkedIn.jpeg" 
           alt="Marttin Roman - Senior QA Automation Engineer" 
           class="relative w-36 h-36 md:w-44 md:h-44 rounded-2xl object-cover border-2 border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-xl"
           onerror="this.src='https://ui-avatars.com/api/?name=Marttin+Roman&background=0f172a&color=38bdf8&size=256'"
@@ -597,19 +597,33 @@
 
     themeToggleBtn.addEventListener('click', toggleTheme);
 
-    // Copy Email to Clipboard Helper with Toast
+    // Copy Email to Clipboard Helper with Toast & Fallback
     const copyEmailBtn = document.getElementById('copy-email-btn');
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toast-message');
     let toastTimeout = null;
 
+    function fallbackCopyText(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (err) {}
+      document.body.removeChild(textArea);
+    }
+
     copyEmailBtn.addEventListener('click', () => {
       const email = 'marttinroman@gmail.com';
-      navigator.clipboard.writeText(email).then(() => {
+      
+      const showToast = () => {
         const dict = translations[currentLocale] || translations.en;
         toastMessage.textContent = dict.toast_copied || 'Email copied to clipboard!';
         
-        // Show toast
         toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
         toast.classList.add('translate-y-0', 'opacity-100');
 
@@ -618,9 +632,17 @@
           toast.classList.remove('translate-y-0', 'opacity-100');
           toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
         }, 2500);
-      }).catch(err => {
-        console.error('Failed to copy email: ', err);
-      });
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(showToast).catch(() => {
+          fallbackCopyText(email);
+          showToast();
+        });
+      } else {
+        fallbackCopyText(email);
+        showToast();
+      }
     });
 
     // Initialize Language and Icons
