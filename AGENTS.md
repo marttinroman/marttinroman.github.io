@@ -324,6 +324,18 @@ tests/
 
 > Log significant changes per session. Delete old entries as needed.
 
+### 2026-11-06 - Google Cloud Credentials & Verification Suite Expansion
+
+- Added "Certifications & Cloud Badges" section to `index.html` featuring Google Cloud Computing Foundations Certificate, Credly badges, and Google Cloud Skills Boost profile.
+- Added verified Credly badge asset `docs/img/google-cloud-computing-foundations-certificate.png`.
+- Added complete English and Spanish `i18n` dictionary mappings for all credential titles, badges, and action buttons.
+- Extended Playwright KATA testing suite:
+  - `TestContext.ts`: Added `expectedCredentials` URLs array.
+  - `PortfolioPage.ts`: Added `certBadgeImg` locator and `verifyOutboundCertifications()` ATC.
+  - `portfolio.spec.ts`: Added E2E verification test for credentials and security attributes (`_blank`, `noopener noreferrer`).
+  - `playwright.config.ts`: Adjusted worker count to 2 to ensure resilient concurrent static asset delivery.
+- Verified test suite with `npx playwright test` (7/7 passed in 7.4s).
+
 ### 2026-10-30 - Fase 6: Implementation Planning (FIP & SIP)
 
 - Authored 7 Feature Implementation Plans (`feature-implementation-plan.md`) covering all epics in `.context/PBI/epics/`.
@@ -346,6 +358,5 @@ tests/
 
 ---
 
-**Last Updated**: 2026-10-30
-**Session Count**: 5
-**Session Count**: 4
+**Last Updated**: 2026-11-06
+**Session Count**: 6

@@ -30,6 +30,12 @@ test.describe('Marttin Roman Portfolio - E2E Verification Suite', () => {
     await ui.verifyVideoSoundActivation();
   });
 
+  test('should feature verified and secured certifications and cloud badge links', async ({
+    ui,
+  }) => {
+    await ui.verifyOutboundCertifications();
+  });
+
   test('should trigger copy email feedback toast', async ({ ui }) => {
     await ui.triggerEmailCopy();
   });

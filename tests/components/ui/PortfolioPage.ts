@@ -14,6 +14,10 @@ export class PortfolioPage extends UiBase {
   readonly avatarImg = this.page.locator('img[alt*="Marttin Roman"]');
   readonly presentationVideo = this.page.locator('#presentation-video');
   readonly videoUnmuteOverlay = this.page.locator('#video-unmute-overlay');
+  readonly certBadgeImg = this.page.locator(
+    'img[src*="google-cloud-computing-foundations-certificate.png"]',
+  );
+
   readonly flagshipRepoLink = this.page.locator('a[href*="autonomous-qa-engine"]');
 
   // Atomic Test Components (ATCs)
@@ -79,5 +83,18 @@ export class PortfolioPage extends UiBase {
     }
     const isMuted = await this.presentationVideo.evaluate((v: HTMLVideoElement) => v.muted);
     expect(isMuted).toBe(false);
+  }
+
+  async verifyOutboundCertifications() {
+    await expect(this.certBadgeImg).toBeVisible();
+    for (const credUrl of this.config.expectedCredentials) {
+      const link = this.page.locator(`a[href="${credUrl}"]`).first();
+      await expect(link).toBeAttached();
+      const target = await link.getAttribute('target');
+      const rel = await link.getAttribute('rel');
+      expect(target).toBe('_blank');
+      expect(rel).toContain('noopener');
+      expect(rel).toContain('noreferrer');
+    }
   }
 }
