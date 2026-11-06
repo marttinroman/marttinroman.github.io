@@ -1,653 +1,1168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marttin Roman | Senior QA Automation Engineer &amp; SDET | AI-TestOps</title>
-  <meta name="description" content="Senior QA Automation Engineer & SDET specializing in zero-flake test frameworks, AI/LLM evaluation, and automated CI/CD Quality Gates." />
-  <link rel="icon" href="docs/img/LinkedIn.jpeg" type="image/jpeg" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marttin Roman | Senior QA Automation Engineer &amp; SDET | AI-TestOps</title>
+    <meta
+      name="description"
+      content="Senior QA Automation Engineer & SDET specializing in zero-flake test frameworks, AI/LLM evaluation, and automated CI/CD Quality Gates."
+    />
+    <link rel="icon" href="docs/img/LinkedIn.jpeg" type="image/jpeg" />
 
-  <!-- Early Theme Detection to Prevent FOUC (Flash of Unstyled Theme) -->
-  <script>
-    (function () {
-      const storedTheme = localStorage.getItem('preferred_theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
-        document.documentElement.classList.add('dark');
-      } else if (storedTheme === 'light') {
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark'); // Safe default
-      }
-    })();
-  </script>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              200: '#bae6fd',
-              300: '#7dd3fc',
-              400: '#38bdf8',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              800: '#075985',
-              900: '#0c4a6e',
-            }
-          }
+    <!-- Early Theme Detection to Prevent FOUC (Flash of Unstyled Theme) -->
+    <script>
+      (function () {
+        const storedTheme = localStorage.getItem('preferred_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else if (storedTheme === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark'); // Safe default
         }
-      }
-    }
-  </script>
+      })();
+    </script>
 
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white transition-colors duration-200">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#f0f9ff',
+                100: '#e0f2fe',
+                200: '#bae6fd',
+                300: '#7dd3fc',
+                400: '#38bdf8',
+                500: '#0ea5e9',
+                600: '#0284c7',
+                700: '#0369a1',
+                800: '#075985',
+                900: '#0c4a6e',
+              },
+            },
+          },
+        },
+      };
+    </script>
 
-  <!-- Glow Background Effect -->
-  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-    <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-sky-400/10 dark:bg-sky-500/10 blur-[130px] rounded-full"></div>
-    <div class="absolute top-1/2 -right-40 w-[400px] h-[350px] bg-purple-400/10 dark:bg-purple-500/10 blur-[140px] rounded-full"></div>
-  </div>
-
-  <!-- Toast Notification Container -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2 px-4 py-3 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-2xl border border-slate-700 dark:border-slate-200 text-sm font-medium">
-    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 dark:text-emerald-600"></i>
-    <span id="toast-message">Email copied to clipboard!</span>
-  </div>
-
-  <!-- Top Navigation & Controls Bar -->
-  <header class="sticky top-0 z-40 backdrop-blur-md bg-slate-50/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80">
-    <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="#" class="font-mono text-sm font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
-        <span>marttinroman.dev</span>
-      </a>
-
-      <div class="flex items-center gap-3">
-        <!-- Language Switcher Button -->
-        <button id="lang-toggle" 
-                type="button"
-                aria-label="Switch interface language"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition shadow-sm">
-          <i data-lucide="globe" class="w-3.5 h-3.5 text-sky-500"></i>
-          <span id="lang-label">EN / ES</span>
-        </button>
-
-        <!-- Theme Toggle Button -->
-        <button id="theme-toggle" 
-                type="button"
-                aria-label="Toggle dark/light theme"
-                class="p-2 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition shadow-sm">
-          <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 hidden dark:block text-amber-400"></i>
-          <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 block dark:hidden text-slate-700"></i>
-        </button>
-      </div>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body
+    class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white transition-colors duration-200"
+  >
+    <!-- Glow Background Effect -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+      <div
+        class="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-sky-400/10 dark:bg-sky-500/10 blur-[130px] rounded-full"
+      ></div>
+      <div
+        class="absolute top-1/2 -right-40 w-[400px] h-[350px] bg-purple-400/10 dark:bg-purple-500/10 blur-[140px] rounded-full"
+      ></div>
     </div>
-  </header>
 
-  <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 space-y-16">
+    <!-- Toast Notification Container -->
+    <div
+      id="toast"
+      class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2 px-4 py-3 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-2xl border border-slate-700 dark:border-slate-200 text-sm font-medium"
+    >
+      <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 dark:text-emerald-600"></i>
+      <span id="toast-message">Email copied to clipboard!</span>
+    </div>
 
-    <!-- Hero / Profile Section -->
-    <section class="flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-8 pb-10 border-b border-slate-200 dark:border-slate-800/80">
-      <div class="space-y-4 text-center md:text-left flex-1">
-        <!-- Availability Badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"></span>
-          <span data-i18n="hero_availability">Available for remote &amp; international roles</span>
-        </div>
+    <!-- Top Navigation & Controls Bar -->
+    <header
+      class="sticky top-0 z-40 backdrop-blur-md bg-slate-50/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80"
+    >
+      <div class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a
+          href="#"
+          class="font-mono text-sm font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2"
+        >
+          <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+          <span>marttinroman.dev</span>
+        </a>
 
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          Marttin Roman
-        </h1>
+        <div class="flex items-center gap-3">
+          <!-- Language Switcher Button -->
+          <button
+            id="lang-toggle"
+            type="button"
+            aria-label="Switch interface language"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition shadow-sm"
+          >
+            <i data-lucide="globe" class="w-3.5 h-3.5 text-sky-500"></i>
+            <span id="lang-label">EN / ES</span>
+          </button>
 
-        <p class="text-lg md:text-xl font-mono text-sky-600 dark:text-sky-400 font-medium" data-i18n="hero_title">
-          Senior QA Automation Engineer &amp; SDET
-        </p>
-
-        <p class="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed max-w-xl" data-i18n="hero_bio">
-          Systems Engineer specializing in designing zero-flake automation frameworks, non-deterministic AI / LLM evaluation, and accelerating continuous integration pipelines.
-        </p>
-
-        <!-- Social / Contact Buttons -->
-        <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
-          <a href="https://github.com/marttinroman" target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium hover:border-sky-500 hover:text-sky-600 dark:hover:text-white transition-all shadow-sm">
-            <i data-lucide="github" class="w-4 h-4"></i> GitHub
-          </a>
-          <a href="https://linkedin.com/in/marttinroman" target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium hover:border-sky-500 hover:text-sky-600 dark:hover:text-white transition-all shadow-sm">
-            <i data-lucide="linkedin" class="w-4 h-4 text-sky-600 dark:text-sky-400"></i> LinkedIn
-          </a>
-          <a href="mailto:marttinroman@gmail.com?subject=Inquiry%20regarding%20Senior%20SDET%20%2F%20QA%20Automation"
-             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition-all shadow-sm">
-            <i data-lucide="mail" class="w-4 h-4"></i> <span data-i18n="btn_contact">Contact</span>
-          </a>
-          <button id="copy-email-btn"
-                  type="button"
-                  aria-label="Copy email address"
-                  class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all shadow-sm"
-                  title="marttinroman@gmail.com">
-            <i data-lucide="copy" class="w-4 h-4"></i>
-            <span class="sr-only">Copy email</span>
+          <!-- Theme Toggle Button -->
+          <button
+            id="theme-toggle"
+            type="button"
+            aria-label="Toggle dark/light theme"
+            class="p-2 rounded-lg text-xs font-medium bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 transition shadow-sm"
+          >
+            <i
+              id="theme-icon-sun"
+              data-lucide="sun"
+              class="w-4 h-4 hidden dark:block text-amber-400"
+            ></i>
+            <i
+              id="theme-icon-moon"
+              data-lucide="moon"
+              class="w-4 h-4 block dark:hidden text-slate-700"
+            ></i>
           </button>
         </div>
       </div>
+    </header>
 
-      <!-- Profile Avatar -->
-      <div class="relative group">
-        <div class="absolute -inset-0.5 bg-gradient-to-tr from-sky-500 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-        <img 
-          src="docs/img/LinkedIn.jpeg" 
-          alt="Marttin Roman - Senior QA Automation Engineer" 
-          class="relative w-36 h-36 md:w-44 md:h-44 rounded-2xl object-cover border-2 border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-xl"
-          onerror="this.src='https://ui-avatars.com/api/?name=Marttin+Roman&background=0f172a&color=38bdf8&size=256'"
-          loading="eager"
-        />
-      </div>
-    </section>
-
-    <!-- Core Specialties / Value Proposition -->
-    <section class="space-y-6">
-      <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold">
-        <i data-lucide="cpu" class="w-4 h-4"></i>
-        <span data-i18n="section_specialties">Technical Specialties</span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <!-- Card 1 -->
-        <div class="p-6 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition shadow-sm">
-          <div class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-4">
-            <i data-lucide="shield-check" class="w-5 h-5"></i>
+    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20 space-y-16">
+      <!-- Hero / Profile Section -->
+      <section
+        class="flex flex-col-reverse md:flex-row items-center md:items-start justify-between gap-8 pb-10 border-b border-slate-200 dark:border-slate-800/80"
+      >
+        <div class="space-y-4 text-center md:text-left flex-1">
+          <!-- Availability Badge -->
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse"
+            ></span>
+            <span data-i18n="hero_availability"
+              >Available for remote &amp; international roles</span
+            >
           </div>
-          <h3 class="font-semibold text-slate-900 dark:text-white text-base mb-2" data-i18n="spec1_title">Automation Frameworks</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="spec1_desc">
-            Robust E2E and API architecture with Playwright and TypeScript under the Page Object Model pattern. Drastic reduction of flaky tests and parallel multi-browser execution.
-          </p>
-        </div>
 
-        <!-- Card 2 -->
-        <div class="p-6 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition shadow-sm">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4">
-            <i data-lucide="bot" class="w-5 h-5"></i>
+          <h1
+            class="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white"
+          >
+            Marttin Roman
+          </h1>
+
+          <p
+            class="text-lg md:text-xl font-mono text-sky-600 dark:text-sky-400 font-medium"
+            data-i18n="hero_title"
+          >
+            Senior QA Automation Engineer &amp; SDET
+          </p>
+
+          <p
+            class="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed max-w-xl"
+            data-i18n="hero_bio"
+          >
+            Systems Engineer specializing in designing zero-flake automation frameworks,
+            non-deterministic AI / LLM evaluation, and accelerating continuous integration
+            pipelines.
+          </p>
+
+          <!-- Social / Contact Buttons -->
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
+            <a
+              href="https://github.com/marttinroman"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium hover:border-sky-500 hover:text-sky-600 dark:hover:text-white transition-all shadow-sm"
+            >
+              <i data-lucide="github" class="w-4 h-4"></i> GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/marttinroman"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium hover:border-sky-500 hover:text-sky-600 dark:hover:text-white transition-all shadow-sm"
+            >
+              <i data-lucide="linkedin" class="w-4 h-4 text-sky-600 dark:text-sky-400"></i> LinkedIn
+            </a>
+            <a
+              href="mailto:marttinroman@gmail.com?subject=Inquiry%20regarding%20Senior%20SDET%20%2F%20QA%20Automation"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition-all shadow-sm"
+            >
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              <span data-i18n="btn_contact">Contact</span>
+            </a>
+            <button
+              id="copy-email-btn"
+              type="button"
+              aria-label="Copy email address"
+              class="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all shadow-sm"
+              title="marttinroman@gmail.com"
+            >
+              <i data-lucide="copy" class="w-4 h-4"></i>
+              <span class="sr-only">Copy email</span>
+            </button>
           </div>
-          <h3 class="font-semibold text-slate-900 dark:text-white text-base mb-2" data-i18n="spec2_title">AI &amp; RAG Validation</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="spec2_desc">
-            Systematic evaluation of LLM pipelines, vector databases, cosine semantic similarity scoring, source faithfulness, and automated hallucination prevention.
-          </p>
         </div>
 
-        <!-- Card 3 -->
-        <div class="p-6 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition shadow-sm">
-          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4">
-            <i data-lucide="git-branch" class="w-5 h-5"></i>
+        <!-- Profile Avatar -->
+        <div class="relative group">
+          <div
+            class="absolute -inset-0.5 bg-gradient-to-tr from-sky-500 to-indigo-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"
+          ></div>
+          <img
+            src="docs/img/LinkedIn.jpeg"
+            alt="Marttin Roman - Senior QA Automation Engineer"
+            class="relative w-36 h-36 md:w-44 md:h-44 rounded-2xl object-cover border-2 border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 shadow-xl"
+            onerror="
+              this.src =
+                'https://ui-avatars.com/api/?name=Marttin+Roman&background=0f172a&color=38bdf8&size=256'
+            "
+            loading="eager"
+          />
+        </div>
+      </section>
+
+      <!-- Executive Video Presentation Section -->
+      <section class="space-y-4" aria-label="Professional video presentation">
+        <div class="flex items-center justify-between">
+          <div
+            class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold"
+          >
+            <i data-lucide="video" class="w-4 h-4"></i>
+            <span data-i18n="section_video_title">1-Minute Presentation</span>
           </div>
-          <h3 class="font-semibold text-slate-900 dark:text-white text-base mb-2" data-i18n="spec3_title">CI/CD &amp; TestOps</h3>
-          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="spec3_desc">
-            Continuous integration of test suites into GitHub Actions and Azure DevOps with automated Quality Gates, living HTML reports, and zero-cost cloud runs.
-          </p>
+          <span
+            class="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20"
+            data-i18n="video_badge"
+          >
+            Full HD • English
+          </span>
         </div>
-      </div>
-    </section>
 
-    <!-- FLAGSHIP PROJECT SECTION: Autonomous QA & AI-TestOps Engine -->
-    <section class="space-y-6">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold">
-          <i data-lucide="award" class="w-4 h-4"></i>
-          <span data-i18n="flagship_section_title">Flagship Engineering Project</span>
-        </div>
-        <span class="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20" data-i18n="flagship_badge">
-          Production Quality Gate
-        </span>
-      </div>
+        <div
+          class="relative rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-2 sm:p-3 shadow-md hover:border-slate-300 dark:hover:border-slate-700 transition"
+        >
+          <div
+            class="relative w-full rounded-xl overflow-hidden bg-slate-950 aspect-[1728/1117] shadow-inner"
+          >
+            <video
+              id="presentation-video"
+              controls
+              autoplay
+              loop
+              preload="metadata"
+              playsinline
+              poster="docs/img/video-poster.jpg"
+              aria-label="Marttin Roman 1-minute professional video presentation"
+              class="w-full h-full object-contain bg-black"
+            >
+              <source src="docs/videos/marttin-roman-short-presentation.mp4" type="video/mp4" />
+              <source
+                src="docs/videos/2026-11-05%2012-16-07_Marttin_Roman_Short_Presentation_English_1_min_Full_HD.mp4"
+                type="video/mp4"
+              />
+              <p class="text-xs text-slate-500 p-4" data-i18n="video_unsupported">
+                Your browser does not support the video tag.
+                <a
+                  href="docs/videos/marttin-roman-short-presentation.mp4"
+                  class="underline text-sky-500"
+                  >Download the video directly</a
+                >.
+              </p>
+            </video>
 
-      <article class="relative rounded-2xl bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/80 border border-slate-200 dark:border-slate-800 p-6 md:p-8 shadow-md hover:border-sky-500/50 transition-all space-y-6">
-        
-        <!-- Header -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
-          <div>
-            <div class="inline-flex items-center gap-2 text-xs font-mono font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-1">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-              <span data-i18n="flagship_category">Autonomous QA &amp; AI-TestOps Engine</span>
+            <!-- Floating Unmute Button (shown if browser forced initial muted autoplay) -->
+            <button
+              id="video-unmute-overlay"
+              type="button"
+              style="display: none"
+              class="absolute top-4 right-4 z-20 items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-900 text-white border border-slate-700/80 backdrop-blur-md shadow-lg text-xs font-medium transition transform hover:scale-105 active:scale-95 cursor-pointer"
+              aria-label="Enable sound"
+            >
+              <i data-lucide="volume-2" class="w-4 h-4 text-sky-400 animate-pulse"></i>
+              <span data-i18n="video_unmute_btn">Enable Sound</span>
+            </button>
+          </div>
+          <div
+            class="pt-3 pb-1 px-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-600 dark:text-slate-400"
+          >
+            <div class="flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-500"></i>
+              <span data-i18n="video_caption"
+                >Overview of SDET leadership, AI test pipelines, and zero-flake automation.</span
+              >
             </div>
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white" data-i18n="flagship_title">
-              Autonomous Continuous Quality Gate for Web, APIs &amp; AI (LLM / RAG)
-            </h2>
+            <span class="font-mono text-[11px] text-slate-400 dark:text-slate-500"
+              >01:00 • 1080p 60fps</span
+            >
           </div>
-          <a href="https://github.com/marttinroman/autonomous-qa-engine" target="_blank" rel="noopener noreferrer"
-             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-mono font-medium transition shadow-sm whitespace-nowrap self-start md:self-auto">
-            <span data-i18n="btn_inspect_repo">Inspect Repository</span>
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          </a>
+        </div>
+      </section>
+
+      <!-- Core Specialties / Value Proposition -->
+      <section class="space-y-6">
+        <div
+          class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold"
+        >
+          <i data-lucide="cpu" class="w-4 h-4"></i>
+          <span data-i18n="section_specialties">Technical Specialties</span>
         </div>
 
-        <!-- The Problem & Solution Narrative -->
-        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="flagship_overview">
-          Modern software combines interactive frontends, microservices, and non-deterministic Generative AI. This engine acts as a unified autonomous Quality Gate before and after deployments, addressing prompt regressions, hallucinations, and flaky tests under a single automated umbrella.
-        </p>
-
-        <!-- 3-Layer Validation Architecture Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-          
-          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 space-y-2">
-            <div class="flex items-center gap-2 text-xs font-mono font-semibold text-sky-600 dark:text-sky-400">
-              <i data-lucide="layout" class="w-4 h-4"></i>
-              <span>Layer 1: UI &amp; Flows</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Card 1 -->
+          <div
+            class="p-6 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition shadow-sm"
+          >
+            <div
+              class="w-10 h-10 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-4"
+            >
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
-            <h4 class="font-semibold text-slate-900 dark:text-white text-sm" data-i18n="layer1_title">Playwright &amp; TypeScript</h4>
-            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="layer1_desc">
-              Multi-browser parallel execution with Page Object Model, dynamic test fixtures, and auto-waiting resilience to eliminate false positives.
+            <h3
+              class="font-semibold text-slate-900 dark:text-white text-base mb-2"
+              data-i18n="spec1_title"
+            >
+              Automation Frameworks
+            </h3>
+            <p
+              class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"
+              data-i18n="spec1_desc"
+            >
+              Robust E2E and API architecture with Playwright and TypeScript under the Page Object
+              Model pattern. Drastic reduction of flaky tests and parallel multi-browser execution.
             </p>
           </div>
 
-          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 space-y-2">
-            <div class="flex items-center gap-2 text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400">
-              <i data-lucide="check-square" class="w-4 h-4"></i>
-              <span>Layer 2: API Contracts</span>
+          <!-- Card 2 -->
+          <div
+            class="p-6 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition shadow-sm"
+          >
+            <div
+              class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4"
+            >
+              <i data-lucide="bot" class="w-5 h-5"></i>
             </div>
-            <h4 class="font-semibold text-slate-900 dark:text-white text-sm" data-i18n="layer2_title">JSON Schema &amp; Latency</h4>
-            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="layer2_desc">
-              Strict schema conformity checks, HTTP response assertions, and automated latency threshold scoring integrated into the CI pipeline.
+            <h3
+              class="font-semibold text-slate-900 dark:text-white text-base mb-2"
+              data-i18n="spec2_title"
+            >
+              AI &amp; RAG Validation
+            </h3>
+            <p
+              class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"
+              data-i18n="spec2_desc"
+            >
+              Systematic evaluation of LLM pipelines, vector databases, cosine semantic similarity
+              scoring, source faithfulness, and automated hallucination prevention.
             </p>
           </div>
 
-          <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 space-y-2">
-            <div class="flex items-center gap-2 text-xs font-mono font-semibold text-purple-600 dark:text-purple-400">
-              <i data-lucide="brain-circuit" class="w-4 h-4"></i>
-              <span>Layer 3: AI Evaluation</span>
+          <!-- Card 3 -->
+          <div
+            class="p-6 rounded-xl bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition shadow-sm"
+          >
+            <div
+              class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4"
+            >
+              <i data-lucide="git-branch" class="w-5 h-5"></i>
             </div>
-            <h4 class="font-semibold text-slate-900 dark:text-white text-sm" data-i18n="layer3_title">RAG Semantic Harness</h4>
-            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="layer3_desc">
-              Evaluation of LLM prompt drift, source faithfulness, and vector embeddings similarity using cosine distance benchmarks.
+            <h3
+              class="font-semibold text-slate-900 dark:text-white text-base mb-2"
+              data-i18n="spec3_title"
+            >
+              CI/CD &amp; TestOps
+            </h3>
+            <p
+              class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"
+              data-i18n="spec3_desc"
+            >
+              Continuous integration of test suites into GitHub Actions and Azure DevOps with
+              automated Quality Gates, living HTML reports, and zero-cost cloud runs.
             </p>
           </div>
+        </div>
+      </section>
 
+      <!-- FLAGSHIP PROJECT SECTION: Autonomous QA & AI-TestOps Engine -->
+      <section class="space-y-6">
+        <div class="flex items-center justify-between">
+          <div
+            class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold"
+          >
+            <i data-lucide="award" class="w-4 h-4"></i>
+            <span data-i18n="flagship_section_title">Flagship Engineering Project</span>
+          </div>
+          <span
+            class="text-xs font-mono font-medium px-2.5 py-1 rounded-md bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20"
+            data-i18n="flagship_badge"
+          >
+            Production Quality Gate
+          </span>
         </div>
 
-        <!-- Infrastructure & Business Value Highlight Banner -->
-        <div class="p-4 rounded-xl bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
-              <i data-lucide="zap" class="w-5 h-5"></i>
-            </div>
+        <article
+          class="relative rounded-2xl bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/80 border border-slate-200 dark:border-slate-800 p-6 md:p-8 shadow-md hover:border-sky-500/50 transition-all space-y-6"
+        >
+          <!-- Header -->
+          <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800"
+          >
             <div>
-              <h5 class="text-xs font-mono font-bold text-slate-900 dark:text-white" data-i18n="infra_val_title">
-                $0 Infrastructure Operating Cost
-              </h5>
-              <p class="text-xs text-slate-600 dark:text-slate-400" data-i18n="infra_val_desc">
-                Leverages GitHub Actions ephemeral VMs and GitHub Pages live reporting without requiring dedicated 24/7 databases or servers.
+              <div
+                class="inline-flex items-center gap-2 text-xs font-mono font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-1"
+              >
+                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                <span data-i18n="flagship_category">Autonomous QA &amp; AI-TestOps Engine</span>
+              </div>
+              <h2
+                class="text-2xl font-bold text-slate-900 dark:text-white"
+                data-i18n="flagship_title"
+              >
+                Autonomous Continuous Quality Gate for Web, APIs &amp; AI (LLM / RAG)
+              </h2>
+            </div>
+            <a
+              href="https://github.com/marttinroman/autonomous-qa-engine"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-mono font-medium transition shadow-sm whitespace-nowrap self-start md:self-auto"
+            >
+              <span data-i18n="btn_inspect_repo">Inspect Repository</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+
+          <!-- The Problem & Solution Narrative -->
+          <p
+            class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed"
+            data-i18n="flagship_overview"
+          >
+            Modern software combines interactive frontends, microservices, and non-deterministic
+            Generative AI. This engine acts as a unified autonomous Quality Gate before and after
+            deployments, addressing prompt regressions, hallucinations, and flaky tests under a
+            single automated umbrella.
+          </p>
+
+          <!-- 3-Layer Validation Architecture Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div
+              class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 space-y-2"
+            >
+              <div
+                class="flex items-center gap-2 text-xs font-mono font-semibold text-sky-600 dark:text-sky-400"
+              >
+                <i data-lucide="layout" class="w-4 h-4"></i>
+                <span>Layer 1: UI &amp; Flows</span>
+              </div>
+              <h4
+                class="font-semibold text-slate-900 dark:text-white text-sm"
+                data-i18n="layer1_title"
+              >
+                Playwright &amp; TypeScript
+              </h4>
+              <p
+                class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"
+                data-i18n="layer1_desc"
+              >
+                Multi-browser parallel execution with Page Object Model, dynamic test fixtures, and
+                auto-waiting resilience to eliminate false positives.
+              </p>
+            </div>
+
+            <div
+              class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 space-y-2"
+            >
+              <div
+                class="flex items-center gap-2 text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400"
+              >
+                <i data-lucide="check-square" class="w-4 h-4"></i>
+                <span>Layer 2: API Contracts</span>
+              </div>
+              <h4
+                class="font-semibold text-slate-900 dark:text-white text-sm"
+                data-i18n="layer2_title"
+              >
+                JSON Schema &amp; Latency
+              </h4>
+              <p
+                class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"
+                data-i18n="layer2_desc"
+              >
+                Strict schema conformity checks, HTTP response assertions, and automated latency
+                threshold scoring integrated into the CI pipeline.
+              </p>
+            </div>
+
+            <div
+              class="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800/80 space-y-2"
+            >
+              <div
+                class="flex items-center gap-2 text-xs font-mono font-semibold text-purple-600 dark:text-purple-400"
+              >
+                <i data-lucide="brain-circuit" class="w-4 h-4"></i>
+                <span>Layer 3: AI Evaluation</span>
+              </div>
+              <h4
+                class="font-semibold text-slate-900 dark:text-white text-sm"
+                data-i18n="layer3_title"
+              >
+                RAG Semantic Harness
+              </h4>
+              <p
+                class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed"
+                data-i18n="layer3_desc"
+              >
+                Evaluation of LLM prompt drift, source faithfulness, and vector embeddings
+                similarity using cosine distance benchmarks.
               </p>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2 text-[11px] font-mono shrink-0">
-            <span class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">Playwright</span>
-            <span class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">TypeScript</span>
-            <span class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">Python</span>
-            <span class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300">GitHub Actions</span>
+
+          <!-- Infrastructure & Business Value Highlight Banner -->
+          <div
+            class="p-4 rounded-xl bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-800/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0"
+              >
+                <i data-lucide="zap" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h5
+                  class="text-xs font-mono font-bold text-slate-900 dark:text-white"
+                  data-i18n="infra_val_title"
+                >
+                  $0 Infrastructure Operating Cost
+                </h5>
+                <p class="text-xs text-slate-600 dark:text-slate-400" data-i18n="infra_val_desc">
+                  Leverages GitHub Actions ephemeral VMs and GitHub Pages live reporting without
+                  requiring dedicated 24/7 databases or servers.
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 text-[11px] font-mono shrink-0">
+              <span
+                class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                >Playwright</span
+              >
+              <span
+                class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                >TypeScript</span
+              >
+              <span
+                class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                >Python</span
+              >
+              <span
+                class="px-2.5 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300"
+                >GitHub Actions</span
+              >
+            </div>
           </div>
+        </article>
+      </section>
+
+      <!-- Additional Featured Projects -->
+      <section class="space-y-6">
+        <div class="flex items-center justify-between">
+          <div
+            class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold"
+          >
+            <i data-lucide="layers" class="w-4 h-4"></i>
+            <span data-i18n="section_projects">Featured Open-Source Repositories</span>
+          </div>
+          <span class="text-xs font-mono text-slate-500">Playwright, AI &amp; Performance</span>
         </div>
 
-      </article>
-    </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Card 1: E2E Framework Boilerplate -->
+          <article
+            class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm"
+          >
+            <div
+              class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800"
+            >
+              <div class="flex flex-col items-center gap-2 text-slate-500">
+                <i data-lucide="terminal" class="w-8 h-8 text-sky-500"></i>
+                <span class="font-mono text-xs">Playwright / TypeScript E2E Engine</span>
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h4
+                  class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-sky-500 transition"
+                  data-i18n="proj1_title"
+                >
+                  E2E Framework Boilerplate
+                </h4>
+                <p
+                  class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed"
+                  data-i18n="proj1_desc"
+                >
+                  Modular end-to-end testing framework with Playwright and TypeScript, automated
+                  report generation, and parallel execution in GitHub Actions.
+                </p>
+              </div>
+              <div
+                class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500"
+              >
+                <span>TypeScript / Playwright</span>
+                <a
+                  href="https://github.com/marttinroman/e2e-framework-boilerplate"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline"
+                >
+                  <span data-i18n="btn_repo">Repository</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </article>
 
-    <!-- Additional Featured Projects -->
-    <section class="space-y-6">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold">
-          <i data-lucide="layers" class="w-4 h-4"></i>
-          <span data-i18n="section_projects">Featured Open-Source Repositories</span>
+          <!-- Card 2: AI Vector Validation Suite -->
+          <article
+            class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm"
+          >
+            <div
+              class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800"
+            >
+              <div class="flex flex-col items-center gap-2 text-slate-500">
+                <i data-lucide="sparkles" class="w-8 h-8 text-purple-500"></i>
+                <span class="font-mono text-xs">AI Evaluation &amp; Benchmarks</span>
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h4
+                  class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-purple-500 transition"
+                  data-i18n="proj2_title"
+                >
+                  AI Vector Validation Suite
+                </h4>
+                <p
+                  class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed"
+                  data-i18n="proj2_desc"
+                >
+                  Tool to evaluate and benchmark responses in RAG systems and vector databases with
+                  similarity and hallucination metrics.
+                </p>
+              </div>
+              <div
+                class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500"
+              >
+                <span>Python / LLMs</span>
+                <a
+                  href="https://github.com/marttinroman/ai-vector-validation-suite"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline"
+                >
+                  <span data-i18n="btn_repo">Repository</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: API Performance Harness -->
+          <article
+            class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm"
+          >
+            <div
+              class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800"
+            >
+              <div class="flex flex-col items-center gap-2 text-slate-500">
+                <i data-lucide="gauge" class="w-8 h-8 text-emerald-500"></i>
+                <span class="font-mono text-xs">k6 / Distributed Load Testing</span>
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h4
+                  class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-emerald-500 transition"
+                  data-i18n="proj3_title"
+                >
+                  API Performance Harness
+                </h4>
+                <p
+                  class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed"
+                  data-i18n="proj3_desc"
+                >
+                  Distributed load and stress testing suite with k6, configured as a quality control
+                  gate before releasing to production.
+                </p>
+              </div>
+              <div
+                class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500"
+              >
+                <span>k6 / Docker</span>
+                <a
+                  href="https://github.com/marttinroman/api-performance-harness"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline"
+                >
+                  <span data-i18n="btn_repo">Repository</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Visual Regression Engine -->
+          <article
+            class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm"
+          >
+            <div
+              class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800"
+            >
+              <div class="flex flex-col items-center gap-2 text-slate-500">
+                <i data-lucide="eye" class="w-8 h-8 text-amber-500"></i>
+                <span class="font-mono text-xs">Pixel-by-Pixel Visual Testing</span>
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h4
+                  class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-amber-500 transition"
+                  data-i18n="proj4_title"
+                >
+                  Visual Regression Engine
+                </h4>
+                <p
+                  class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed"
+                  data-i18n="proj4_desc"
+                >
+                  Pixel-by-pixel visual regression testing pipeline with multi-viewport support and
+                  dynamic snapshot diff comparison.
+                </p>
+              </div>
+              <div
+                class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500"
+              >
+                <span>Automation / CI</span>
+                <a
+                  href="https://github.com/marttinroman/visual-regression-engine"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline"
+                >
+                  <span data-i18n="btn_repo">Repository</span>
+                  <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </article>
         </div>
-        <span class="text-xs font-mono text-slate-500">Playwright, AI &amp; Performance</span>
-      </div>
+      </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Technical Stack Badges -->
+      <section class="space-y-4">
+        <div
+          class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold"
+        >
+          <i data-lucide="code" class="w-4 h-4"></i>
+          <span data-i18n="section_tools">Tools &amp; Technologies</span>
+        </div>
 
-        <!-- Card 1: E2E Framework Boilerplate -->
-        <article class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm">
-          <div class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
-            <div class="flex flex-col items-center gap-2 text-slate-500">
-              <i data-lucide="terminal" class="w-8 h-8 text-sky-500"></i>
-              <span class="font-mono text-xs">Playwright / TypeScript E2E Engine</span>
-            </div>
-          </div>
-          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-            <div>
-              <h4 class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-sky-500 transition" data-i18n="proj1_title">
-                E2E Framework Boilerplate
-              </h4>
-              <p class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed" data-i18n="proj1_desc">
-                Modular end-to-end testing framework with Playwright and TypeScript, automated report generation, and parallel execution in GitHub Actions.
-              </p>
-            </div>
-            <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500">
-              <span>TypeScript / Playwright</span>
-              <a href="https://github.com/marttinroman/e2e-framework-boilerplate" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline">
-                <span data-i18n="btn_repo">Repository</span> <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-              </a>
-            </div>
-          </div>
-        </article>
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >Playwright</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >TypeScript</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >Python</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >Docker</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >GitHub Actions</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >k6 (Performance)</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >REST &amp; GraphQL APIs</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >Azure DevOps</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >Allure TestOps</span
+          >
+          <span
+            class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm"
+            >AI Agents &amp; RAG Evaluation</span
+          >
+        </div>
+      </section>
 
-        <!-- Card 2: AI Vector Validation Suite -->
-        <article class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm">
-          <div class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
-            <div class="flex flex-col items-center gap-2 text-slate-500">
-              <i data-lucide="sparkles" class="w-8 h-8 text-purple-500"></i>
-              <span class="font-mono text-xs">AI Evaluation &amp; Benchmarks</span>
-            </div>
-          </div>
-          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-            <div>
-              <h4 class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-purple-500 transition" data-i18n="proj2_title">
-                AI Vector Validation Suite
-              </h4>
-              <p class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed" data-i18n="proj2_desc">
-                Tool to evaluate and benchmark responses in RAG systems and vector databases with similarity and hallucination metrics.
-              </p>
-            </div>
-            <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500">
-              <span>Python / LLMs</span>
-              <a href="https://github.com/marttinroman/ai-vector-validation-suite" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline">
-                <span data-i18n="btn_repo">Repository</span> <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-              </a>
-            </div>
-          </div>
-        </article>
+      <!-- Footer -->
+      <footer
+        class="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col md:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-4"
+      >
+        <div>
+          &copy; 2026 Marttin Roman • <span data-i18n="footer_hosted">Hosted on GitHub Pages</span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span>Caracas / Guatire</span>
+          <span>•</span>
+          <span data-i18n="footer_remote">Remote Ready</span>
+        </div>
+      </footer>
+    </main>
 
-        <!-- Card 3: API Performance Harness -->
-        <article class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm">
-          <div class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
-            <div class="flex flex-col items-center gap-2 text-slate-500">
-              <i data-lucide="gauge" class="w-8 h-8 text-emerald-500"></i>
-              <span class="font-mono text-xs">k6 / Distributed Load Testing</span>
-            </div>
-          </div>
-          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-            <div>
-              <h4 class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-emerald-500 transition" data-i18n="proj3_title">
-                API Performance Harness
-              </h4>
-              <p class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed" data-i18n="proj3_desc">
-                Distributed load and stress testing suite with k6, configured as a quality control gate before releasing to production.
-              </p>
-            </div>
-            <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500">
-              <span>k6 / Docker</span>
-              <a href="https://github.com/marttinroman/api-performance-harness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline">
-                <span data-i18n="btn_repo">Repository</span> <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-              </a>
-            </div>
-          </div>
-        </article>
+    <!-- Bilingual Translations Dictionary & Client Logic -->
+    <script>
+      const translations = {
+        en: {
+          hero_availability: 'Available for remote & international roles',
+          hero_title: 'Senior QA Automation Engineer & SDET',
+          hero_bio:
+            'Systems Engineer specializing in designing zero-flake automation frameworks, non-deterministic AI / LLM evaluation, and accelerating continuous integration pipelines.',
+          btn_contact: 'Contact',
+          toast_copied: 'Email copied to clipboard!',
+          section_video_title: '1-Minute Presentation',
+          video_badge: 'Full HD • English',
+          video_unmute_btn: 'Enable Sound',
+          video_caption:
+            'Overview of SDET leadership, AI test pipelines, and zero-flake automation.',
+          video_unsupported:
+            "Your browser does not support the video tag. <a href='docs/videos/marttin-roman-short-presentation.mp4' class='underline text-sky-500'>Download the video directly</a>.",
+          section_specialties: 'Technical Specialties',
+          spec1_title: 'Automation Frameworks',
+          spec1_desc:
+            'Robust E2E and API architecture with Playwright and TypeScript under the Page Object Model pattern. Drastic reduction of flaky tests and parallel multi-browser execution.',
+          spec2_title: 'AI & RAG Validation',
+          spec2_desc:
+            'Systematic evaluation of LLM pipelines, vector databases, cosine semantic similarity scoring, source faithfulness, and automated hallucination prevention.',
+          spec3_title: 'CI/CD & TestOps',
+          spec3_desc:
+            'Continuous integration of test suites into GitHub Actions and Azure DevOps with automated Quality Gates, living HTML reports, and zero-cost cloud runs.',
+          flagship_section_title: 'Flagship Engineering Project',
+          flagship_badge: 'Production Quality Gate',
+          flagship_category: 'Autonomous QA & AI-TestOps Engine',
+          flagship_title: 'Autonomous Continuous Quality Gate for Web, APIs & AI (LLM / RAG)',
+          btn_inspect_repo: 'Inspect Repository',
+          flagship_overview:
+            'Modern software combines interactive frontends, microservices, and non-deterministic Generative AI. This engine acts as a unified autonomous Quality Gate before and after deployments, addressing prompt regressions, hallucinations, and flaky tests under a single automated umbrella.',
+          layer1_title: 'Playwright & TypeScript',
+          layer1_desc:
+            'Multi-browser parallel execution with Page Object Model, dynamic test fixtures, and auto-waiting resilience to eliminate false positives.',
+          layer2_title: 'JSON Schema & Latency',
+          layer2_desc:
+            'Strict schema conformity checks, HTTP response assertions, and automated latency threshold scoring integrated into the CI pipeline.',
+          layer3_title: 'RAG Semantic Harness',
+          layer3_desc:
+            'Evaluation of LLM prompt drift, source faithfulness, and vector embeddings similarity using cosine distance benchmarks.',
+          infra_val_title: '$0 Infrastructure Operating Cost',
+          infra_val_desc:
+            'Leverages GitHub Actions ephemeral VMs and GitHub Pages live reporting without requiring dedicated 24/7 databases or servers.',
+          section_projects: 'Featured Open-Source Repositories',
+          proj1_title: 'E2E Framework Boilerplate',
+          proj1_desc:
+            'Modular end-to-end testing framework with Playwright and TypeScript, automated report generation, and parallel execution in GitHub Actions.',
+          proj2_title: 'AI Vector Validation Suite',
+          proj2_desc:
+            'Tool to evaluate and benchmark responses in RAG systems and vector databases with similarity and hallucination metrics.',
+          proj3_title: 'API Performance Harness',
+          proj3_desc:
+            'Distributed load and stress testing suite with k6, configured as a quality control gate before releasing to production.',
+          proj4_title: 'Visual Regression Engine',
+          proj4_desc:
+            'Pixel-by-pixel visual regression testing pipeline with multi-viewport support and dynamic snapshot diff comparison.',
+          btn_repo: 'Repository',
+          section_tools: 'Tools & Technologies',
+          footer_hosted: 'Hosted on GitHub Pages',
+          footer_remote: 'Remote Ready',
+        },
+        es: {
+          hero_availability: 'Disponible para roles remotos e internacionales',
+          hero_title: 'Senior QA Automation Engineer & SDET',
+          hero_bio:
+            'Ingeniero de Sistemas especializado en diseño de frameworks de automatización desde cero, validación de sistemas de IA / LLMs y aceleración de pipelines de integración continua.',
+          btn_contact: 'Contactar',
+          toast_copied: '¡Correo copiado al portapapeles!',
+          section_video_title: 'Presentación en 1 Minuto',
+          video_badge: 'Full HD • Inglés',
+          video_unmute_btn: 'Activar Sonido',
+          video_caption:
+            'Resumen de liderazgo SDET, pipelines de pruebas para IA y automatización sin flakes.',
+          video_unsupported:
+            "Tu navegador no soporta el reproductor de video. <a href='docs/videos/marttin-roman-short-presentation.mp4' class='underline text-sky-500'>Descarga el video directamente</a>.",
+          section_specialties: 'Especialidades Técnicas',
+          spec1_title: 'Frameworks de Automatización',
+          spec1_desc:
+            'Arquitectura E2E y API robusta con Playwright y TypeScript bajo el patrón Page Object Model. Reducción drástica de flaky tests y ejecución paralela multi-navegador.',
+          spec2_title: 'Validación de IA & RAG',
+          spec2_desc:
+            'Evaluación sistemática de LLMs, bases de datos vectoriales, scoring de similitud semántica de coseno, fidelidad de fuentes y control de alucinaciones.',
+          spec3_title: 'CI/CD & TestOps',
+          spec3_desc:
+            'Integración de suites de pruebas en GitHub Actions y Azure DevOps con compuertas de calidad (Quality Gates) automatizadas y reportes en vivo.',
+          flagship_section_title: 'Proyecto Estrella de Ingeniería',
+          flagship_badge: 'Quality Gate en Producción',
+          flagship_category: 'Autonomous QA & AI-TestOps Engine',
+          flagship_title: 'Quality Gate Autónomo Continuo para Web, APIs e IA (LLM / RAG)',
+          btn_inspect_repo: 'Inspeccionar Repositorio',
+          flagship_overview:
+            'Las arquitecturas de software modernas combinan interfaces interactivas, microservicios y componentes de IA que no responden de forma determinista. Este motor actúa como un Quality Gate autónomo unificado antes y después de cada despliegue, eliminando alucinaciones y falsos positivos.',
+          layer1_title: 'Playwright & TypeScript',
+          layer1_desc:
+            'Ejecución paralela multi-navegador bajo Page Object Model, fixtures dinámicos y esperas automáticas para eliminar pruebas inestables.',
+          layer2_title: 'Esquemas JSON & Latencia',
+          layer2_desc:
+            'Chequeo estricto de conformidad de esquemas, aserciones HTTP y medición de umbrales de latencia integrados en el pipeline CI/CD.',
+          layer3_title: 'Harness Semántico RAG',
+          layer3_desc:
+            'Evaluación de deriva en prompts de LLMs, fidelidad de fuentes y similitud semántica de embeddings mediante métricas de distancia coseno.',
+          infra_val_title: 'Coste de Infraestructura $0',
+          infra_val_desc:
+            'Aprovecha máquinas virtuales efímeras en GitHub Actions y despliegue estático en GitHub Pages sin bases de datos ni servidores 24/7.',
+          section_projects: 'Repositorios Open-Source Destacados',
+          proj1_title: 'E2E Framework Boilerplate',
+          proj1_desc:
+            'Framework modular de pruebas end-to-end con Playwright y TypeScript, generación de reportes automáticos y paralelización en GitHub Actions.',
+          proj2_title: 'AI Vector Validation Suite',
+          proj2_desc:
+            'Herramienta para evaluar y benchmarkear respuestas en sistemas RAG y bases de datos vectoriales con métricas de similitud y alucinación.',
+          proj3_title: 'API Performance Harness',
+          proj3_desc:
+            'Suite de pruebas de carga y estrés distribuido con k6, configurado como control de calidad previo al pase a producción.',
+          proj4_title: 'Visual Regression Engine',
+          proj4_desc:
+            'Pipeline de pruebas de regresión visual píxel a píxel con soporte multi-viewport y comparación de snapshots dinámicos.',
+          btn_repo: 'Repositorio',
+          section_tools: 'Herramientas & Tecnologías',
+          footer_hosted: 'Publicado en GitHub Pages',
+          footer_remote: 'Disponible para Trabajo Remoto',
+        },
+      };
 
-        <!-- Card 4: Visual Regression Engine -->
-        <article class="group rounded-xl bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800/90 overflow-hidden hover:border-slate-300 dark:hover:border-slate-700 transition flex flex-col shadow-sm">
-          <div class="h-36 bg-slate-100 dark:bg-slate-800/70 relative overflow-hidden flex items-center justify-center border-b border-slate-200 dark:border-slate-800">
-            <div class="flex flex-col items-center gap-2 text-slate-500">
-              <i data-lucide="eye" class="w-8 h-8 text-amber-500"></i>
-              <span class="font-mono text-xs">Pixel-by-Pixel Visual Testing</span>
-            </div>
-          </div>
-          <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
-            <div>
-              <h4 class="font-semibold text-slate-900 dark:text-white text-base group-hover:text-amber-500 transition" data-i18n="proj4_title">
-                Visual Regression Engine
-              </h4>
-              <p class="text-slate-600 dark:text-slate-400 text-xs mt-2 leading-relaxed" data-i18n="proj4_desc">
-                Pixel-by-pixel visual regression testing pipeline with multi-viewport support and dynamic snapshot diff comparison.
-              </p>
-            </div>
-            <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800 text-xs font-mono text-slate-500">
-              <span>Automation / CI</span>
-              <a href="https://github.com/marttinroman/visual-regression-engine" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sky-600 dark:text-sky-400 hover:underline">
-                <span data-i18n="btn_repo">Repository</span> <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-              </a>
-            </div>
-          </div>
-        </article>
+      // State management: Language
+      let currentLocale = localStorage.getItem('preferred_locale') || 'en';
 
-      </div>
-    </section>
+      function setLanguage(locale) {
+        currentLocale = locale;
+        try {
+          localStorage.setItem('preferred_locale', locale);
+        } catch (e) {
+          console.warn('LocalStorage unavailable for locale persistence', e);
+        }
 
-    <!-- Technical Stack Badges -->
-    <section class="space-y-4">
-      <div class="flex items-center gap-2 text-sky-600 dark:text-sky-400 font-mono text-sm tracking-wider uppercase font-semibold">
-        <i data-lucide="code" class="w-4 h-4"></i>
-        <span data-i18n="section_tools">Tools &amp; Technologies</span>
-      </div>
+        document.documentElement.setAttribute('lang', locale);
+        const dict = translations[locale] || translations.en;
 
-      <div class="flex flex-wrap gap-2 text-xs font-mono">
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">Playwright</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">TypeScript</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">Python</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">Docker</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">GitHub Actions</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">k6 (Performance)</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">REST &amp; GraphQL APIs</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">Azure DevOps</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">Allure TestOps</span>
-        <span class="px-3 py-1.5 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 shadow-sm">AI Agents &amp; RAG Evaluation</span>
-      </div>
-    </section>
+        // Update all data-i18n elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) {
+            el.innerHTML = dict[key];
+          }
+        });
 
-    <!-- Footer -->
-    <footer class="pt-8 border-t border-slate-200 dark:border-slate-800/80 flex flex-col md:flex-row items-center justify-between text-xs font-mono text-slate-500 gap-4">
-      <div>&copy; 2026 Marttin Roman • <span data-i18n="footer_hosted">Hosted on GitHub Pages</span></div>
-      <div class="flex items-center gap-4">
-        <span>Caracas / Guatire</span>
-        <span>•</span>
-        <span data-i18n="footer_remote">Remote Ready</span>
-      </div>
-    </footer>
+        // Update switcher label
+        const langLabel = document.getElementById('lang-label');
+        if (langLabel) {
+          langLabel.textContent = locale === 'en' ? 'EN ▾' : 'ES ▾';
+        }
 
-  </main>
-
-  <!-- Bilingual Translations Dictionary & Client Logic -->
-  <script>
-    const translations = {
-      en: {
-        hero_availability: "Available for remote & international roles",
-        hero_title: "Senior QA Automation Engineer & SDET",
-        hero_bio: "Systems Engineer specializing in designing zero-flake automation frameworks, non-deterministic AI / LLM evaluation, and accelerating continuous integration pipelines.",
-        btn_contact: "Contact",
-        toast_copied: "Email copied to clipboard!",
-        section_specialties: "Technical Specialties",
-        spec1_title: "Automation Frameworks",
-        spec1_desc: "Robust E2E and API architecture with Playwright and TypeScript under the Page Object Model pattern. Drastic reduction of flaky tests and parallel multi-browser execution.",
-        spec2_title: "AI & RAG Validation",
-        spec2_desc: "Systematic evaluation of LLM pipelines, vector databases, cosine semantic similarity scoring, source faithfulness, and automated hallucination prevention.",
-        spec3_title: "CI/CD & TestOps",
-        spec3_desc: "Continuous integration of test suites into GitHub Actions and Azure DevOps with automated Quality Gates, living HTML reports, and zero-cost cloud runs.",
-        flagship_section_title: "Flagship Engineering Project",
-        flagship_badge: "Production Quality Gate",
-        flagship_category: "Autonomous QA & AI-TestOps Engine",
-        flagship_title: "Autonomous Continuous Quality Gate for Web, APIs & AI (LLM / RAG)",
-        btn_inspect_repo: "Inspect Repository",
-        flagship_overview: "Modern software combines interactive frontends, microservices, and non-deterministic Generative AI. This engine acts as a unified autonomous Quality Gate before and after deployments, addressing prompt regressions, hallucinations, and flaky tests under a single automated umbrella.",
-        layer1_title: "Playwright & TypeScript",
-        layer1_desc: "Multi-browser parallel execution with Page Object Model, dynamic test fixtures, and auto-waiting resilience to eliminate false positives.",
-        layer2_title: "JSON Schema & Latency",
-        layer2_desc: "Strict schema conformity checks, HTTP response assertions, and automated latency threshold scoring integrated into the CI pipeline.",
-        layer3_title: "RAG Semantic Harness",
-        layer3_desc: "Evaluation of LLM prompt drift, source faithfulness, and vector embeddings similarity using cosine distance benchmarks.",
-        infra_val_title: "$0 Infrastructure Operating Cost",
-        infra_val_desc: "Leverages GitHub Actions ephemeral VMs and GitHub Pages live reporting without requiring dedicated 24/7 databases or servers.",
-        section_projects: "Featured Open-Source Repositories",
-        proj1_title: "E2E Framework Boilerplate",
-        proj1_desc: "Modular end-to-end testing framework with Playwright and TypeScript, automated report generation, and parallel execution in GitHub Actions.",
-        proj2_title: "AI Vector Validation Suite",
-        proj2_desc: "Tool to evaluate and benchmark responses in RAG systems and vector databases with similarity and hallucination metrics.",
-        proj3_title: "API Performance Harness",
-        proj3_desc: "Distributed load and stress testing suite with k6, configured as a quality control gate before releasing to production.",
-        proj4_title: "Visual Regression Engine",
-        proj4_desc: "Pixel-by-pixel visual regression testing pipeline with multi-viewport support and dynamic snapshot diff comparison.",
-        btn_repo: "Repository",
-        section_tools: "Tools & Technologies",
-        footer_hosted: "Hosted on GitHub Pages",
-        footer_remote: "Remote Ready"
-      },
-      es: {
-        hero_availability: "Disponible para roles remotos e internacionales",
-        hero_title: "Senior QA Automation Engineer & SDET",
-        hero_bio: "Ingeniero de Sistemas especializado en diseño de frameworks de automatización desde cero, validación de sistemas de IA / LLMs y aceleración de pipelines de integración continua.",
-        btn_contact: "Contactar",
-        toast_copied: "¡Correo copiado al portapapeles!",
-        section_specialties: "Especialidades Técnicas",
-        spec1_title: "Frameworks de Automatización",
-        spec1_desc: "Arquitectura E2E y API robusta con Playwright y TypeScript bajo el patrón Page Object Model. Reducción drástica de flaky tests y ejecución paralela multi-navegador.",
-        spec2_title: "Validación de IA & RAG",
-        spec2_desc: "Evaluación sistemática de LLMs, bases de datos vectoriales, scoring de similitud semántica de coseno, fidelidad de fuentes y control de alucinaciones.",
-        spec3_title: "CI/CD & TestOps",
-        spec3_desc: "Integración de suites de pruebas en GitHub Actions y Azure DevOps con compuertas de calidad (Quality Gates) automatizadas y reportes en vivo.",
-        flagship_section_title: "Proyecto Estrella de Ingeniería",
-        flagship_badge: "Quality Gate en Producción",
-        flagship_category: "Autonomous QA & AI-TestOps Engine",
-        flagship_title: "Quality Gate Autónomo Continuo para Web, APIs e IA (LLM / RAG)",
-        btn_inspect_repo: "Inspeccionar Repositorio",
-        flagship_overview: "Las arquitecturas de software modernas combinan interfaces interactivas, microservicios y componentes de IA que no responden de forma determinista. Este motor actúa como un Quality Gate autónomo unificado antes y después de cada despliegue, eliminando alucinaciones y falsos positivos.",
-        layer1_title: "Playwright & TypeScript",
-        layer1_desc: "Ejecución paralela multi-navegador bajo Page Object Model, fixtures dinámicos y esperas automáticas para eliminar pruebas inestables.",
-        layer2_title: "Esquemas JSON & Latencia",
-        layer2_desc: "Chequeo estricto de conformidad de esquemas, aserciones HTTP y medición de umbrales de latencia integrados en el pipeline CI/CD.",
-        layer3_title: "Harness Semántico RAG",
-        layer3_desc: "Evaluación de deriva en prompts de LLMs, fidelidad de fuentes y similitud semántica de embeddings mediante métricas de distancia coseno.",
-        infra_val_title: "Coste de Infraestructura $0",
-        infra_val_desc: "Aprovecha máquinas virtuales efímeras en GitHub Actions y despliegue estático en GitHub Pages sin bases de datos ni servidores 24/7.",
-        section_projects: "Repositorios Open-Source Destacados",
-        proj1_title: "E2E Framework Boilerplate",
-        proj1_desc: "Framework modular de pruebas end-to-end con Playwright y TypeScript, generación de reportes automáticos y paralelización en GitHub Actions.",
-        proj2_title: "AI Vector Validation Suite",
-        proj2_desc: "Herramienta para evaluar y benchmarkear respuestas en sistemas RAG y bases de datos vectoriales con métricas de similitud y alucinación.",
-        proj3_title: "API Performance Harness",
-        proj3_desc: "Suite de pruebas de carga y estrés distribuido con k6, configurado como control de calidad previo al pase a producción.",
-        proj4_title: "Visual Regression Engine",
-        proj4_desc: "Pipeline de pruebas de regresión visual píxel a píxel con soporte multi-viewport y comparación de snapshots dinámicos.",
-        btn_repo: "Repositorio",
-        section_tools: "Herramientas & Tecnologías",
-        footer_hosted: "Publicado en GitHub Pages",
-        footer_remote: "Disponible para Trabajo Remoto"
+        // Re-trigger icon rendering if needed
+        if (window.lucide) {
+          lucide.createIcons();
+        }
       }
-    };
 
-    // State management: Language
-    let currentLocale = localStorage.getItem('preferred_locale') || 'en';
+      document.getElementById('lang-toggle').addEventListener('click', () => {
+        const nextLocale = currentLocale === 'en' ? 'es' : 'en';
+        setLanguage(nextLocale);
+      });
 
-    function setLanguage(locale) {
-      currentLocale = locale;
-      try {
-        localStorage.setItem('preferred_locale', locale);
-      } catch (e) {
-        console.warn('LocalStorage unavailable for locale persistence', e);
+      // State management: Dark / Light Theme
+      const themeToggleBtn = document.getElementById('theme-toggle');
+
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+          document.documentElement.classList.remove('dark');
+          try {
+            localStorage.setItem('preferred_theme', 'light');
+          } catch (e) {}
+        } else {
+          document.documentElement.classList.add('dark');
+          try {
+            localStorage.setItem('preferred_theme', 'dark');
+          } catch (e) {}
+        }
+        if (window.lucide) {
+          lucide.createIcons();
+        }
       }
 
-      document.documentElement.setAttribute('lang', locale);
-      const dict = translations[locale] || translations.en;
+      themeToggleBtn.addEventListener('click', toggleTheme);
 
-      // Update all data-i18n elements
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) {
-          el.innerHTML = dict[key];
+      // Copy Email to Clipboard Helper with Toast & Fallback
+      const copyEmailBtn = document.getElementById('copy-email-btn');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      let toastTimeout = null;
+
+      function fallbackCopyText(text) {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+        } catch (err) {}
+        document.body.removeChild(textArea);
+      }
+
+      copyEmailBtn.addEventListener('click', () => {
+        const email = 'marttinroman@gmail.com';
+
+        const showToast = () => {
+          const dict = translations[currentLocale] || translations.en;
+          toastMessage.textContent = dict.toast_copied || 'Email copied to clipboard!';
+
+          toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+          toast.classList.add('translate-y-0', 'opacity-100');
+
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+          }, 2500);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard
+            .writeText(email)
+            .then(showToast)
+            .catch(() => {
+              fallbackCopyText(email);
+              showToast();
+            });
+        } else {
+          fallbackCopyText(email);
+          showToast();
         }
       });
 
-      // Update switcher label
-      const langLabel = document.getElementById('lang-label');
-      if (langLabel) {
-        langLabel.textContent = locale === 'en' ? 'EN ▾' : 'ES ▾';
-      }
+      // Video Autoplay, Sound & Auto-loop Controller
+      const presentationVideo = document.getElementById('presentation-video');
+      const unmuteOverlayBtn = document.getElementById('video-unmute-overlay');
 
-      // Re-trigger icon rendering if needed
-      if (window.lucide) {
-        lucide.createIcons();
-      }
-    }
+      if (presentationVideo) {
+        presentationVideo.volume = 1.0;
 
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-      const nextLocale = currentLocale === 'en' ? 'es' : 'en';
-      setLanguage(nextLocale);
-    });
+        const showUnmuteButton = () => {
+          if (unmuteOverlayBtn && presentationVideo.muted) {
+            unmuteOverlayBtn.style.display = 'inline-flex';
+            if (window.lucide) {
+              lucide.createIcons();
+            }
+          }
+        };
 
-    // State management: Dark / Light Theme
-    const themeToggleBtn = document.getElementById('theme-toggle');
+        const hideUnmuteButton = () => {
+          if (unmuteOverlayBtn) {
+            unmuteOverlayBtn.style.display = 'none';
+          }
+        };
 
-    function toggleTheme() {
-      const isDark = document.documentElement.classList.contains('dark');
-      if (isDark) {
-        document.documentElement.classList.remove('dark');
-        try { localStorage.setItem('preferred_theme', 'light'); } catch (e) {}
-      } else {
-        document.documentElement.classList.add('dark');
-        try { localStorage.setItem('preferred_theme', 'dark'); } catch (e) {}
-      }
-      if (window.lucide) {
-        lucide.createIcons();
-      }
-    }
+        const activateSound = () => {
+          presentationVideo.muted = false;
+          presentationVideo.volume = 1.0;
+          hideUnmuteButton();
+        };
 
-    themeToggleBtn.addEventListener('click', toggleTheme);
-
-    // Copy Email to Clipboard Helper with Toast & Fallback
-    const copyEmailBtn = document.getElementById('copy-email-btn');
-    const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toast-message');
-    let toastTimeout = null;
-
-    function fallbackCopyText(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-      } catch (err) {}
-      document.body.removeChild(textArea);
-    }
-
-    copyEmailBtn.addEventListener('click', () => {
-      const email = 'marttinroman@gmail.com';
-      
-      const showToast = () => {
-        const dict = translations[currentLocale] || translations.en;
-        toastMessage.textContent = dict.toast_copied || 'Email copied to clipboard!';
-        
-        toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
-        toast.classList.add('translate-y-0', 'opacity-100');
-
-        clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => {
-          toast.classList.remove('translate-y-0', 'opacity-100');
-          toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
-        }, 2500);
-      };
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(email).then(showToast).catch(() => {
-          fallbackCopyText(email);
-          showToast();
+        // Escuchar cambios de volumen / unmute desde los controles nativos
+        presentationVideo.addEventListener('volumechange', () => {
+          if (!presentationVideo.muted && presentationVideo.volume > 0) {
+            hideUnmuteButton();
+          }
         });
-      } else {
-        fallbackCopyText(email);
-        showToast();
-      }
-    });
 
-    // Initialize Language and Icons
-    setLanguage(currentLocale);
-    lucide.createIcons();
-  </script>
-</body>
+        if (unmuteOverlayBtn) {
+          unmuteOverlayBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            activateSound();
+          });
+        }
+
+        const attemptPlayWithSound = () => {
+          // Intentar activar sonido y reproducir inmediatamente al cargar o refrescar
+          presentationVideo.muted = false;
+          presentationVideo.volume = 1.0;
+
+          const playPromise = presentationVideo.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                // Reproducción con sonido exitosa
+                hideUnmuteButton();
+              })
+              .catch(() => {
+                // Si el navegador bloquea la reproducción con sonido por Autoplay Policy:
+                // 1. Iniciamos silenciado para que el video corra visualmente sin pausarse
+                presentationVideo.muted = true;
+                presentationVideo.play().catch(err => {
+                  console.warn('Autoplay prevented by browser policy:', err);
+                });
+
+                // 2. Mostramos el botón flotante para activar sonido
+                showUnmuteButton();
+
+                // 3. Al primer clic o interacción del usuario en la página, activar sonido automáticamente
+                const enableSoundOnGesture = () => {
+                  activateSound();
+                  ['click', 'keydown', 'touchstart'].forEach(evt => {
+                    document.removeEventListener(evt, enableSoundOnGesture);
+                  });
+                };
+                ['click', 'keydown', 'touchstart'].forEach(evt => {
+                  document.addEventListener(evt, enableSoundOnGesture, {
+                    once: true,
+                    passive: true,
+                  });
+                });
+              });
+          }
+        };
+
+        if (document.readyState === 'complete') {
+          attemptPlayWithSound();
+        } else {
+          window.addEventListener('load', attemptPlayWithSound);
+        }
+
+        // Cada vez que finalice el video, reiniciar al inicio y reproducir
+        presentationVideo.addEventListener('ended', () => {
+          presentationVideo.currentTime = 0;
+          presentationVideo.play().catch(err => {
+            console.warn('Auto-replay failed:', err);
+          });
+        });
+      }
+
+      // Initialize Language and Icons
+      setLanguage(currentLocale);
+      lucide.createIcons();
+    </script>
+  </body>
 </html>

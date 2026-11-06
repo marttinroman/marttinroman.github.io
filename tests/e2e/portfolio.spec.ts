@@ -25,6 +25,11 @@ test.describe('Marttin Roman Portfolio - E2E Verification Suite', () => {
     expect(src).toContain('LinkedIn.jpeg');
   });
 
+  test('should display and configure executive presentation video', async ({ ui }) => {
+    await ui.verifyPresentationVideo();
+    await ui.verifyVideoSoundActivation();
+  });
+
   test('should trigger copy email feedback toast', async ({ ui }) => {
     await ui.triggerEmailCopy();
   });

@@ -12,6 +12,8 @@ export class PortfolioPage extends UiBase {
   readonly copyEmailBtn = this.page.locator('#copy-email-btn');
   readonly toast = this.page.locator('#toast');
   readonly avatarImg = this.page.locator('img[alt*="Marttin Roman"]');
+  readonly presentationVideo = this.page.locator('#presentation-video');
+  readonly videoUnmuteOverlay = this.page.locator('#video-unmute-overlay');
   readonly flagshipRepoLink = this.page.locator('a[href*="autonomous-qa-engine"]');
 
   // Atomic Test Components (ATCs)
@@ -56,5 +58,26 @@ export class PortfolioPage extends UiBase {
     await this.copyEmailBtn.click();
     await expect(this.toast).toBeVisible();
     await expect(this.toast).toHaveClass(/opacity-100/);
+  }
+
+  async verifyPresentationVideo() {
+    await expect(this.presentationVideo).toBeVisible();
+    await expect(this.presentationVideo).toHaveAttribute('autoplay', '');
+    await expect(this.presentationVideo).toHaveAttribute('loop', '');
+    const poster = await this.presentationVideo.getAttribute('poster');
+    expect(poster).toContain('video-poster.jpg');
+    const source = this.presentationVideo.locator('source').first();
+    const src = await source.getAttribute('src');
+    expect(src).toContain('marttin-roman-short-presentation.mp4');
+  }
+
+  async verifyVideoSoundActivation() {
+    // Si el overlay está visible por política de autoplay del navegador, hacer click para activar sonido
+    if (await this.videoUnmuteOverlay.isVisible()) {
+      await this.videoUnmuteOverlay.click();
+      await expect(this.videoUnmuteOverlay).toBeHidden();
+    }
+    const isMuted = await this.presentationVideo.evaluate((v: HTMLVideoElement) => v.muted);
+    expect(isMuted).toBe(false);
   }
 }
