@@ -1,6 +1,7 @@
 export interface TestConfig {
   baseUrl: string
   expectedEmail: string
+  expectedVideoSlug: string
   expectedRepositories: string[]
   expectedCredentials: string[]
 }
@@ -12,6 +13,7 @@ export class TestContext {
     this.config = {
       baseUrl: process.env.BASE_URL || 'http://127.0.0.1:8080',
       expectedEmail: 'marttinroman@gmail.com',
+      expectedVideoSlug: 'marttin-roman-ai-fit-presentation.mp4',
       expectedRepositories: [
         'https://github.com/marttinroman/autonomous-qa-engine',
         'https://github.com/marttinroman/e2e-framework-boilerplate',

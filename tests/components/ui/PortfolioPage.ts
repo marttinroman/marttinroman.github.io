@@ -72,7 +72,7 @@ export class PortfolioPage extends UiBase {
     expect(poster).toContain('video-poster.jpg');
     const source = this.presentationVideo.locator('source').first();
     const src = await source.getAttribute('src');
-    expect(src).toContain('marttin-roman-short-presentation.mp4');
+    expect(src).toContain(this.config.expectedVideoSlug);
   }
 
   async verifyVideoSoundActivation() {

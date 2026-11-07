@@ -18,6 +18,7 @@
     "jira:sync-fields": "bun run scripts/sync-jira-fields.ts",
     "jira:check": "bun run scripts/check-jira-setup.ts",
     "test:e2e": "playwright test",
+    "video:process": "bash scripts/process-video.sh",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",

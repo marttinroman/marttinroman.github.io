@@ -63,6 +63,21 @@ Here is what you need to know to work productively on this project without break
 - The direct contact button uses a pre-configured `mailto:` with subject line encoding.
 - The "Copy Email" button triggers a custom floating toast. When modifying the toast, keep its transition classes (`translate-y-20`, `opacity-0`) synchronized with the timeout in the JavaScript helper (currently 2500ms).
 
+### E. Video Assets & Media Pipeline
+- Executive and presentation videos are managed according to the standard operating procedure documented in [`.context/guidelines/DEV/video-asset-pipeline.md`](file:///Users/marttinroman/projects/2026/portfolios/marttinroman.github.io/.context/guidelines/DEV/video-asset-pipeline.md).
+- Use the automated processing script:
+  ```bash
+  # Ingest and optimize raw video (web-safe slug, moov faststart, poster frame extraction, symlink)
+  bash scripts/process-video.sh "/path/to/raw-video.mp4" [optional-slug]
+  # Or via npm/bun script
+  bun run video:process "/path/to/raw-video.mp4" [optional-slug]
+  ```
+- Always verify the 4 core conditions:
+  1. Autoplaying (`autoplay`, `loop`, `muted`, `playsinline`).
+  2. Floating `#video-unmute-overlay` sound toggle gesture.
+  3. Optimized web streaming format (`-movflags +faststart` with H.264/AAC).
+  4. Instant poster preview image (`docs/img/video-poster.jpg`).
+
 ---
 
 ## 4. Working with the Linked Repositories

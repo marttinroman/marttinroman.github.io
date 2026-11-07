@@ -22,6 +22,9 @@ bun run api:sync
 
 # Xray TMS CLI
 bun run xray
+
+# Process & optimize presentation video
+bun run video:process "/path/to/raw-video.mp4" [slug]
 ```
 
 **Start a Dev Session:**
@@ -200,13 +203,14 @@ fix/*    ← Bug-fix branches
 
 ## CLI Tools
 
-| Script             | Usage                              | Documentation                 |
-| ------------------ | ---------------------------------- | ----------------------------- |
-| `bun xray`         | TMS sync (import/export/sync)      | `cli/xray/` (self-documented) |
-| `bun run api:sync` | Sync OpenAPI spec + generate types | `cli/sync-openapi.ts`         |
-| `bun run up`       | Update template from upstream      | `cli/update-template.js`      |
-| `bun run lint`     | Lint codebase with ESLint          | `eslint.config.js`            |
-| `bun run format`   | Format with Prettier               | `.prettierrc`                 |
+| Script                  | Usage                                 | Documentation                                     |
+| ----------------------- | ------------------------------------- | ------------------------------------------------- |
+| `bun xray`              | TMS sync (import/export/sync)         | `cli/xray/` (self-documented)                     |
+| `bun run api:sync`      | Sync OpenAPI spec + generate types    | `cli/sync-openapi.ts`                             |
+| `bun run up`            | Update template from upstream         | `cli/update-template.js`                          |
+| `bun run lint`          | Lint codebase with ESLint             | `eslint.config.js`                                |
+| `bun run format`        | Format with Prettier                  | `.prettierrc`                                     |
+| `bun run video:process` | Process & optimize presentation video | `.context/guidelines/DEV/video-asset-pipeline.md` |
 
 **Run `bun <script> --help`** for usage details.
 
@@ -324,6 +328,24 @@ tests/
 
 > Log significant changes per session. Delete old entries as needed.
 
+### 2026-11-07 - Video Asset SOP, AI Fit Presentation Ingestion & CI Automation
+
+- Created permanent Video Asset Pipeline Standard Operating Procedure in [`.context/guidelines/DEV/video-asset-pipeline.md`](.context/guidelines/DEV/video-asset-pipeline.md).
+- Authored automated optimization script [`scripts/process-video.sh`](scripts/process-video.sh) and exposed via `package.json` (`video:process`).
+- Ingested raw video `2026-11-07 12-32-14_Marttin_Roman_AI_Fit_English_1_min_21_sec_Full_HD.mp4`:
+  - Transcoded to web-optimized `docs/videos/marttin-roman-ai-fit-presentation.mp4` (25.5 MB, 1080p 60fps, `-movflags +faststart`).
+  - Extracted high-resolution preview poster `docs/img/video-poster.jpg` (108 KB).
+  - Created backward-compatible relative symlink in `docs/videos/`.
+- Updated `index.html`:
+  - Updated video element sources and fallback links.
+  - Updated section title and badges (`AI Fit Presentation` / `Presentación AI Fit`, `01:21 • Full HD 60fps`).
+  - Preserved UX policies: `autoplay`, `loop`, `playsinline`, and floating `#video-unmute-overlay` sound toggle.
+- Extended Playwright KATA testing suite:
+  - `TestContext.ts`: Added `expectedVideoSlug: 'marttin-roman-ai-fit-presentation.mp4'`.
+  - `PortfolioPage.ts`: Updated `verifyPresentationVideo()` to assert dynamically configured video slug.
+  - Verified test suite with `npx playwright test` (7/7 passed in 5.8s).
+- Created GitHub Actions CI workflow [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) running on `push` and `pull_request` to `main`.
+
 ### 2026-11-06 - Google Cloud Credentials & Verification Suite Expansion
 
 - Added "Certifications & Cloud Badges" section to `index.html` featuring Google Cloud Computing Foundations Certificate, Credly badges, and Google Cloud Skills Boost profile.
@@ -358,5 +380,5 @@ tests/
 
 ---
 
-**Last Updated**: 2026-11-06
-**Session Count**: 6
+**Last Updated**: 2026-11-07
+**Session Count**: 7
