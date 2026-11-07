@@ -30,7 +30,8 @@ When publishing executive presentation videos on GitHub Pages (static Edge CDN /
 * **Problem:** Screen recording software (e.g., QuickTime, OBS) default to filenames like `2026-11-07 12-32-14_Marttin_Roman_AI_Fit_English_1_min_21_sec_Full_HD.mp4`. In HTTP URLs, whitespace characters require percent-encoding (`%20`).
 * **Consequences:** Percent-encoded URLs break web crawlers, introduce 404 hazards across CDNs, look unpolished in network tabs, and trigger selector escaping issues in test automation frameworks like Playwright.
 * **Standard:** Canonical files must always use clean kebab-case slugs (e.g., `marttin-roman-ai-fit-presentation.mp4`).
-* **Backward Compatibility:** A symbolic link matching the raw recording filename is maintained in `docs/videos/` to preserve historical integrity.
+* **Symlink & Tar Dereferencing Constraint:** Never commit symlinks pointing to large video files in the repository. The GitHub Pages deployment action (`actions/upload-pages-artifact`) invokes `tar --dereference`, which resolves symlinks by duplicating the entire binary file. This doubles deployment archive sizes and causes GitHub Pages `syncing_files` backend timeouts.
+* **`.nojekyll` Requirement:** A root `.nojekyll` file must always be maintained so GitHub Pages bypasses the Jekyll markdown build container and deploys static assets directly.
 
 ### 2.2 FastStart Optimization (`moov` Atom Placement)
 * **Problem:** Standard MP4 encoders write the `moov` (movie metadata index) atom at the **end** of the file after all audio and video packets are rendered.

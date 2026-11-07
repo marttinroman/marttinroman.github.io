@@ -42,20 +42,12 @@ ffmpeg -y -ss 00:00:01 -i "$OUTPUT_VIDEO" \
   -vframes 1 -q:v 2 \
   "$POSTER_IMAGE"
 
-# Step 3: Create backward-compatible symlink with raw recording filename
-echo "🔗 Step 3: Setting up backward-compatibility symlink in docs/videos/..."
-(
-  cd "$DOCS_VIDEOS"
-  ln -sf "${SLUG_NAME}.mp4" "$RAW_FILENAME"
-)
-
-# Step 4: Verification telemetry
-echo "✅ Step 4: Verification Telemetry:"
+# Step 3: Verification telemetry
+echo "✅ Step 3: Verification Telemetry:"
 FILE_SIZE_MB=$(du -m "$OUTPUT_VIDEO" | cut -f1)
 echo "   • Processed Video Size: ${FILE_SIZE_MB} MB"
 echo "   • Video Path: $OUTPUT_VIDEO"
 echo "   • Poster Image Path: $POSTER_IMAGE"
-echo "   • Symlink: $DOCS_VIDEOS/$RAW_FILENAME -> ${SLUG_NAME}.mp4"
 
 if [ "$FILE_SIZE_MB" -gt 50 ]; then
   echo "⚠️ Warning: Video is over 50MB. GitHub may warn during push."
