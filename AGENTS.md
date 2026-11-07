@@ -335,7 +335,6 @@ tests/
 - Ingested raw video `2026-11-07 12-32-14_Marttin_Roman_AI_Fit_English_1_min_21_sec_Full_HD.mp4`:
   - Transcoded to web-optimized `docs/videos/marttin-roman-ai-fit-presentation.mp4` (25.5 MB, 1080p 60fps, `-movflags +faststart`).
   - Extracted high-resolution preview poster `docs/img/video-poster.jpg` (108 KB).
-  - Created backward-compatible relative symlink in `docs/videos/`.
 - Updated `index.html`:
   - Updated video element sources and fallback links.
   - Updated section title and badges (`AI Fit Presentation` / `Presentación AI Fit`, `01:21 • Full HD 60fps`).
@@ -343,8 +342,11 @@ tests/
 - Extended Playwright KATA testing suite:
   - `TestContext.ts`: Added `expectedVideoSlug: 'marttin-roman-ai-fit-presentation.mp4'`.
   - `PortfolioPage.ts`: Updated `verifyPresentationVideo()` to assert dynamically configured video slug.
-  - Verified test suite with `npx playwright test` (7/7 passed in 5.8s).
+  - Verified test suite with `npx playwright test` (7/7 passed).
 - Created GitHub Actions CI workflow [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) running on `push` and `pull_request` to `main`.
+- Resolved GitHub Pages `syncing_files` 10-minute timeout:
+  - Root cause: Absence of `.nojekyll` triggered Jekyll build of 470+ repository files, and `upload-pages-artifact` dereferenced the video symlink (`tar --dereference`), duplicating the 25.5 MB video to 51 MB archive.
+  - Fix: Added root `.nojekyll` file and removed duplicate symlink, reducing deploy time from >10 min timeout to 8 seconds (`pages-build-deployment` Run #42422935770 succeeded). Live deployment verified.
 
 ### 2026-11-06 - Google Cloud Credentials & Verification Suite Expansion
 
