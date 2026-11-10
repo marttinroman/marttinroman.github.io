@@ -30,6 +30,7 @@ export class PortfolioPage extends UiBase {
     const lang = await this.getHtmlAttribute('lang');
     expect(lang).toBe('en');
     await expect(this.availabilityBadge).toHaveText('Available for remote & international roles');
+    await expect(this.heroTitle).toHaveText('| 🤖 AI Agentic Engineer | ⚙️  Backend Developer | 💻 QA Automation SDET 🧪 |');
   }
 
   async toggleLanguageToSpanish() {
@@ -37,6 +38,7 @@ export class PortfolioPage extends UiBase {
     const lang = await this.getHtmlAttribute('lang');
     expect(lang).toBe('es');
     await expect(this.availabilityBadge).toHaveText('Disponible para roles remotos e internacionales');
+    await expect(this.heroTitle).toHaveText('| 🤖 AI Agentic Engineer | ⚙️  Backend Developer | 💻 QA Automation SDET 🧪 |');
   }
 
   async toggleTheme() {
